@@ -1,0 +1,12 @@
+{
+  "name": "MONK-LITE",
+  "version": "0.1.0-experimental",
+  "changelog_ref": "_docs/MATRIZ_PREZ_VS_PREZ_LITE.md#L1",
+  "perfil_execucao": {
+    "status": "linha_lite_autonoma",
+    "runtime_target": "core_lite/kernel_see-py_lite.json",
+    "governanca_normativa": "contratos_locais",
+    "turn_boundary_policy": "single_module_per_turn",
+    "observacao": "Linha lite do MONK orientada por arquitetura estrutural, AIP, BDir, BText e contratos locais, com parada obrigatoria apos cada view_*."
+  }
+}

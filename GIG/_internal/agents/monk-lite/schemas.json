@@ -1,0 +1,2366 @@
+{
+  "schemas:ArtefatoTeto.v1": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "schemas:ArtefatoTeto.v1",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "n_max",
+      "fonte_estrutural",
+      "status_mapeamento",
+      "alertas"
+    ],
+    "properties": {
+      "n_max": {
+        "type": "integer",
+        "minimum": 1
+      },
+      "fonte_estrutural": {
+        "type": "string",
+        "enum": [
+          "SUMARIO_COMPLETO",
+          "CONTEXT_MAP_GROUPED_BY_FILE"
+        ]
+      },
+      "status_mapeamento": {
+        "type": "string",
+        "enum": [
+          "SUMARIO_REFERENCIA",
+          "FALLBACK_VARREDURA"
+        ]
+      },
+      "fallback_motivo": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "alertas": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "schemas:MapaMonkCompleto.v1": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "schemas:MapaMonkCompleto.v1",
+    "description": "Mapa estrutural do processo gerado no M1 a partir do sumario completo, com triagem probatoria inicial apenas para navegacao e apoio aos modulos seguintes.",
+    "type": "object",
+    "required": [
+      "versao",
+      "schema",
+      "processo",
+      "total_itens",
+      "campos",
+      "estatisticas",
+      "itens"
+    ],
+    "properties": {
+      "versao": {
+        "type": "string"
+      },
+      "schema": {
+        "type": "string",
+        "const": "MapaMonkCompleto.v1"
+      },
+      "processo": {
+        "type": "string"
+      },
+      "total_itens": {
+        "type": "integer",
+        "minimum": 1
+      },
+      "campos": {
+        "type": "array",
+        "const": [
+          "ordem",
+          "fls",
+          "classificacao",
+          "descricao",
+          "prova",
+          "tipo_prova",
+          "relevancia"
+        ]
+      },
+      "estatisticas": {
+        "type": "object",
+        "required": [
+          "provas",
+          "nao_provas",
+          "por_tipo",
+          "por_classificacao"
+        ],
+        "properties": {
+          "provas": {
+            "type": "integer"
+          },
+          "nao_provas": {
+            "type": "integer"
+          },
+          "por_tipo": {
+            "type": "object"
+          },
+          "por_classificacao": {
+            "type": "object"
+          }
+        }
+      },
+      "itens": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "ordem",
+            "fls",
+            "classificacao",
+            "descricao",
+            "prova",
+            "tipo_prova",
+            "relevancia"
+          ],
+          "properties": {
+            "ordem": {
+              "type": "integer"
+            },
+            "fls": {
+              "type": "string"
+            },
+            "classificacao": {
+              "type": "string"
+            },
+            "descricao": {
+              "type": "string"
+            },
+            "prova": {
+              "type": "boolean"
+            },
+            "tipo_prova": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "relevancia": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  "schemas:QuadroProbatorio.v1": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "schemas:QuadroProbatorio.v1",
+    "type": "object",
+    "description": "Quadro probatorio consolidado apos auditoria probatoria (M3).",
+    "required": [
+      "status",
+      "provas_confirmadas"
+    ],
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "COMPLETO",
+          "INCOMPLETO"
+        ]
+      },
+      "provas_confirmadas": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "ID_Referencia",
+            "Tipo_Peca",
+            "Origem"
+          ],
+          "properties": {
+            "ID_Referencia": {
+              "type": "string"
+            },
+            "Tipo_Peca": {
+              "type": "string"
+            },
+            "Origem": {
+              "type": "string",
+              "enum": [
+                "autos_originais"
+              ]
+            }
+          }
+        }
+      },
+      "lacunas_remanescentes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "peca",
+            "classificacao",
+            "ponto_controvertido"
+          ],
+          "properties": {
+            "peca": {
+              "type": "string"
+            },
+            "classificacao": {
+              "type": "string",
+              "enum": [
+                "LACUNA_INTRINSECA",
+                "LACUNA_CRITICA",
+                "ALERTA_DE_FONTE_SECUNDARIA"
+              ]
+            },
+            "ponto_controvertido": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "fatos_atestados_fe_publica": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Fatos inferidos/atestados por fonte secundaria sem leitura aprofundada da fonte primaria."
+      }
+    }
+  },
+  "schemas:PerguntasChaveResolvidas.v1": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "schemas:PerguntasChaveResolvidas.v1",
+    "type": "object",
+    "description": "Perguntas-chave formuladas no M3 com respostas factuais consolidadas apos auditoria.",
+    "required": [
+      "perguntas"
+    ],
+    "properties": {
+      "perguntas": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "id",
+            "pergunta",
+            "ponto_controvertido",
+            "status"
+          ],
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "pergunta": {
+              "type": "string"
+            },
+            "ponto_controvertido": {
+              "type": "string"
+            },
+            "resposta_factual": {
+              "type": "string"
+            },
+            "prova_base": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "RESPONDIDA",
+                "PENDENTE",
+                "PARCIALMENTE_RESPONDIDA"
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  "schemas:DecisionContext.v1": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "schemas:DecisionContext.v1",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "schema_version",
+      "agent_id",
+      "process_id",
+      "view_m2",
+      "quadro_probatorio",
+      "perguntas_chave_resolvidas",
+      "knowledge_bases",
+      "trace"
+    ],
+    "properties": {
+      "schema_version": {
+        "const": "DecisionContext.v1"
+      },
+      "agent_id": {
+        "type": "string",
+        "enum": [
+          "MONK",
+          "MINGUS"
+        ]
+      },
+      "process_id": {
+        "type": "string",
+        "minLength": 1
+      },
+      "view_m2": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "markdown",
+          "pedidos",
+          "pontos_controvertidos",
+          "fatos_incontroversos"
+        ],
+        "properties": {
+          "markdown": {
+            "type": "string",
+            "minLength": 1
+          },
+          "pedidos": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "descricao"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "descricao": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "pontos_controvertidos": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "descricao",
+                "tipo"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "descricao": {
+                  "type": "string"
+                },
+                "tipo": {
+                  "type": "string",
+                  "enum": [
+                    "FATICO",
+                    "DIREITO"
+                  ]
+                }
+              }
+            }
+          },
+          "fatos_incontroversos": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "descricao"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "descricao": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "quadro_probatorio": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "status",
+          "provas_confirmadas",
+          "lacunas_remanescentes",
+          "fatos_atestados_fe_publica"
+        ],
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "COMPLETO",
+              "INCOMPLETO"
+            ]
+          },
+          "provas_confirmadas": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "ID_Referencia",
+                "Tipo_Peca",
+                "Origem"
+              ],
+              "properties": {
+                "ID_Referencia": {
+                  "type": "string"
+                },
+                "Tipo_Peca": {
+                  "type": "string"
+                },
+                "Origem": {
+                  "type": "string",
+                  "enum": [
+                    "autos_originais"
+                  ]
+                }
+              }
+            }
+          },
+          "lacunas_remanescentes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "peca",
+                "classificacao",
+                "ponto_controvertido"
+              ],
+              "properties": {
+                "peca": {
+                  "type": "string"
+                },
+                "classificacao": {
+                  "type": "string",
+                  "enum": [
+                    "LACUNA_INTRINSECA",
+                    "LACUNA_CRITICA",
+                    "ALERTA_DE_FONTE_SECUNDARIA"
+                  ]
+                },
+                "ponto_controvertido": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "fatos_atestados_fe_publica": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "perguntas_chave_resolvidas": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "perguntas"
+        ],
+        "properties": {
+          "perguntas": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "pergunta",
+                "ponto_controvertido",
+                "status"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "pergunta": {
+                  "type": "string"
+                },
+                "ponto_controvertido": {
+                  "type": "string"
+                },
+                "resposta_factual": {
+                  "type": "string"
+                },
+                "prova_base": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "RESPONDIDA",
+                    "PENDENTE",
+                    "PARCIALMENTE_RESPONDIDA"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "knowledge_bases": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "bdir_id",
+          "btext_id"
+        ],
+        "properties": {
+          "bdir_id": {
+            "type": "string"
+          },
+          "btext_id": {
+            "type": "string"
+          }
+        }
+      },
+      "trace": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "source_m2_module_id",
+          "source_m3_module_id"
+        ],
+        "properties": {
+          "source_m2_module_id": {
+            "type": "string"
+          },
+          "source_m3_module_id": {
+            "type": "string"
+          }
+        }
+      },
+      "extensions": {
+        "type": "object"
+      }
+    }
+  },
+  "schemas:DecisionPanel.v1": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "schemas:DecisionPanel.v1",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "schema_version",
+      "process_id",
+      "status_decisorio",
+      "pontos",
+      "decisoes_por_pedido",
+      "validacao_mecanica_merito"
+    ],
+    "properties": {
+      "schema_version": {
+        "const": "DecisionPanel.v1"
+      },
+      "process_id": {
+        "type": "string",
+        "minLength": 1
+      },
+      "status_decisorio": {
+        "type": "string",
+        "enum": [
+          "APTO_PARA_MINUTA",
+          "NAO_APTO_PARA_MINUTA"
+        ]
+      },
+      "pontos": {
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id_ponto_controvertido",
+            "descricao",
+            "status_fatico",
+            "fundamento_decisorio",
+            "cadeia_btext_sugerida"
+          ],
+          "properties": {
+            "id_ponto_controvertido": {
+              "type": "string"
+            },
+            "descricao": {
+              "type": "string"
+            },
+            "status_fatico": {
+              "type": "string",
+              "enum": [
+                "FATO_PROVADO_DIRETO",
+                "FATO_ATESTADO_POR_FE_PUBLICA",
+                "FATO_NAO_PROVADO"
+              ]
+            },
+            "alerta_completude": {
+              "type": "boolean",
+              "default": false
+            },
+            "fundamento_decisorio": {
+              "type": "string"
+            },
+            "provas_pro": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "provas_contra": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "regras_aplicadas": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "cadeia_btext_sugerida": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "decisoes_por_pedido": {
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "pedido_id",
+            "resultado",
+            "fundamento_resumido",
+            "pontos_relacionados",
+            "origem_fundamento_decisao",
+            "bdir_rule_id",
+            "status_auditoria_fundamento"
+          ],
+          "properties": {
+            "pedido_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "resultado": {
+              "type": "string",
+              "enum": [
+                "ACOLHIDO",
+                "ACOLHIDO_PARCIALMENTE",
+                "REJEITADO"
+              ]
+            },
+            "fundamento_resumido": {
+              "type": "string",
+              "minLength": 1
+            },
+            "pontos_relacionados": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "origem_fundamento_decisao": {
+              "type": "string",
+              "enum": [
+                "BDIR_EXPLICITO",
+                "INFERENCIA_CONTROLADA",
+                "INFERENCIA_GENERICA"
+              ]
+            },
+            "bdir_rule_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "status_auditoria_fundamento": {
+              "type": "string",
+              "enum": [
+                "RASTREAVEL_BDIR",
+                "RASTREAVEL_INFERENCIA_CONTROLADA",
+                "ALERTA_INFERENCIA_GENERICA"
+              ]
+            }
+          }
+        }
+      },
+      "kpis": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "kpi_valoracao_cobertura": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "kpi_prova_direta": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        }
+      },
+      "validacao_mecanica_merito": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "ponto_controvertido_id",
+            "classificacao",
+            "anchor",
+            "bdir_rule_id",
+            "status_fluxo"
+          ],
+          "properties": {
+            "ponto_controvertido_id": {
+              "type": "string"
+            },
+            "classificacao": {
+              "type": "string",
+              "enum": [
+                "FATO_LITERAL",
+                "DEDUCAO_AUTORIZADA",
+                "INFERENCIA_BLOQUEADA"
+              ]
+            },
+            "anchor": {
+              "type": "string"
+            },
+            "bdir_rule_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "status_fluxo": {
+              "type": "string",
+              "enum": [
+                "MANTER_FLUXO",
+                "BLOQUEAR_E_RETORNAR_M3"
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  "schemas:M2LideBase.v1": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "schemas:M2LideBase.v1",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "schema_version",
+      "modulo",
+      "classe_acao",
+      "partes_com_sigilo",
+      "teses_resumidas",
+      "pedidos_atomicos",
+      "body_base"
+    ],
+    "properties": {
+      "schema_version": {
+        "const": "M2LideBase.v1"
+      },
+      "modulo": {
+        "const": "M2"
+      },
+      "classe_acao": {
+        "type": "string",
+        "minLength": 1
+      },
+      "partes_com_sigilo": {
+        "type": "boolean"
+      },
+      "teses_resumidas": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "polo_ativo",
+          "polo_passivo"
+        ],
+        "properties": {
+          "polo_ativo": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "polo_passivo": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      },
+      "pedidos_atomicos": {
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "descricao"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "descricao": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      },
+      "fontes_estruturantes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "classificacao",
+            "anchor"
+          ],
+          "properties": {
+            "classificacao": {
+              "type": "string",
+              "minLength": 1
+            },
+            "anchor": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      },
+      "body_base": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "schemas:ViewM1.v1": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "schemas:ViewM1.v1",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "schema_version",
+      "modulo",
+      "processo",
+      "n_max_paginas",
+      "total_itens",
+      "provas",
+      "nao_provas",
+      "tipos_prova",
+      "status_mapeamento",
+      "alertas",
+      "observacao_operacional",
+      "body"
+    ],
+    "properties": {
+      "schema_version": {
+        "const": "ViewM1.v1"
+      },
+      "modulo": {
+        "const": "M1"
+      },
+      "processo": {
+        "type": "string",
+        "minLength": 1
+      },
+      "n_max_paginas": {
+        "type": "integer",
+        "minimum": 1
+      },
+      "total_itens": {
+        "type": "integer",
+        "minimum": 0
+      },
+      "provas": {
+        "type": "integer",
+        "minimum": 0
+      },
+      "nao_provas": {
+        "type": "integer",
+        "minimum": 0
+      },
+      "tipos_prova": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "documental",
+          "pericial",
+          "testemunhal",
+          "informativa"
+        ],
+        "properties": {
+          "documental": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "pericial": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "testemunhal": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "informativa": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      },
+      "status_mapeamento": {
+        "type": "string",
+        "enum": [
+          "SUMARIO_REFERENCIA",
+          "FALLBACK_VARREDURA"
+        ]
+      },
+      "fallback_motivo": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "alertas": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "observacao_operacional": {
+        "type": "string",
+        "minLength": 1
+      },
+      "body": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "schemas:ViewM4.v1": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "schemas:ViewM4.v1",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "schema_version",
+      "modulo",
+      "titulo",
+      "status_decisorio",
+      "sintese_por_ponto",
+      "auditoria_fundamento_por_pedido",
+      "riscos",
+      "body"
+    ],
+    "properties": {
+      "schema_version": {
+        "const": "ViewM4.v1"
+      },
+      "modulo": {
+        "const": "M4"
+      },
+      "titulo": {
+        "type": "string",
+        "minLength": 1
+      },
+      "status_decisorio": {
+        "type": "string",
+        "enum": [
+          "APTO_PARA_MINUTA",
+          "NAO_APTO_PARA_MINUTA"
+        ]
+      },
+      "sintese_por_ponto": {
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id_ponto_controvertido",
+            "status_fatico",
+            "fundamento_sintetico"
+          ],
+          "properties": {
+            "id_ponto_controvertido": {
+              "type": "string",
+              "minLength": 1
+            },
+            "status_fatico": {
+              "type": "string",
+              "enum": [
+                "FATO_PROVADO_DIRETO",
+                "FATO_ATESTADO_POR_FE_PUBLICA",
+                "FATO_NAO_PROVADO"
+              ]
+            },
+            "fundamento_sintetico": {
+              "type": "string",
+              "minLength": 1
+            },
+            "alerta_completude": {
+              "type": "boolean"
+            }
+          }
+        }
+      },
+      "auditoria_fundamento_por_pedido": {
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "pedido_id",
+            "resultado",
+            "origem_fundamento_decisao",
+            "bdir_rule_id",
+            "status_auditoria_fundamento"
+          ],
+          "properties": {
+            "pedido_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "resultado": {
+              "type": "string",
+              "enum": [
+                "ACOLHIDO",
+                "ACOLHIDO_PARCIALMENTE",
+                "REJEITADO"
+              ]
+            },
+            "origem_fundamento_decisao": {
+              "type": "string",
+              "enum": [
+                "BDIR_EXPLICITO",
+                "INFERENCIA_CONTROLADA",
+                "INFERENCIA_GENERICA"
+              ]
+            },
+            "bdir_rule_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "status_auditoria_fundamento": {
+              "type": "string",
+              "enum": [
+                "RASTREAVEL_BDIR",
+                "RASTREAVEL_INFERENCIA_CONTROLADA",
+                "ALERTA_INFERENCIA_GENERICA"
+              ]
+            }
+          }
+        }
+      },
+      "riscos": {
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "risk_id",
+            "tipo_risco",
+            "severidade",
+            "gatilho",
+            "impacto_decisorio",
+            "acao_proxima",
+            "origem_dado"
+          ],
+          "properties": {
+            "risk_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "tipo_risco": {
+              "type": "string",
+              "enum": [
+                "ALERTA_INFERENCIA_GENERICA",
+                "AUSENCIA_DE_REGRA_BDIR",
+                "LACUNA_DE_COBERTURA_PROBATORIA",
+                "INFERENCIA_BLOQUEADA",
+                "INCONSISTENCIA_DE_FUNDAMENTO"
+              ]
+            },
+            "severidade": {
+              "type": "string",
+              "enum": [
+                "ALTO",
+                "MEDIO",
+                "BAIXO"
+              ]
+            },
+            "pedido_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "ponto_controvertido_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "gatilho": {
+              "type": "string",
+              "minLength": 1
+            },
+            "impacto_decisorio": {
+              "type": "string",
+              "enum": [
+                "MANTER_APTO",
+                "REAVALIAR_PONTO",
+                "NAO_APTO_PARA_MINUTA",
+                "RETORNAR_M3"
+              ]
+            },
+            "acao_proxima": {
+              "type": "string",
+              "minLength": 1
+            },
+            "origem_dado": {
+              "type": "string",
+              "enum": [
+                "out_decision_panel.decisoes_por_pedido",
+                "out_decision_panel.validacao_mecanica_merito",
+                "out_decision_panel.pontos"
+              ]
+            }
+          }
+        }
+      },
+      "body": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "schemas:M2ControversiaSaneada.v1": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "schemas:M2ControversiaSaneada.v1",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "schema_version",
+      "modulo",
+      "pedidos_atomicos",
+      "pontos_controvertidos",
+      "fatos_incontroversos"
+    ],
+    "properties": {
+      "schema_version": {
+        "const": "M2ControversiaSaneada.v1"
+      },
+      "modulo": {
+        "const": "M2"
+      },
+      "pedidos_atomicos": {
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "descricao"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "descricao": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      },
+      "pontos_controvertidos": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "descricao",
+            "tipo"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "descricao": {
+              "type": "string",
+              "minLength": 1
+            },
+            "tipo": {
+              "type": "string",
+              "enum": [
+                "FATICO",
+                "DIREITO"
+              ]
+            }
+          }
+        }
+      },
+      "fatos_incontroversos": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "descricao"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "descricao": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      },
+      "pc_nulo": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "pedido_id",
+            "motivo"
+          ],
+          "properties": {
+            "pedido_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "motivo": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      },
+      "body_saneado": {
+        "type": "string"
+      }
+    }
+  },
+  "schemas:M3OnusProbatorio5Fontes.v1": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "schemas:M3OnusProbatorio5Fontes.v1",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "schema_version",
+      "modulo",
+      "pcs"
+    ],
+    "properties": {
+      "schema_version": {
+        "const": "M3OnusProbatorio5Fontes.v1"
+      },
+      "modulo": {
+        "const": "M3"
+      },
+      "pcs": {
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "pc_id",
+            "pc_descricao",
+            "onus",
+            "agenda_onus_probatorio",
+            "perguntas_chave_pc",
+            "matriz_5_fontes"
+          ],
+          "properties": {
+            "pc_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "pc_descricao": {
+              "type": "string",
+              "minLength": 1
+            },
+            "onus": {
+              "type": "string",
+              "enum": [
+                "AUTOR",
+                "REU",
+                "INVERTIDO"
+              ]
+            },
+            "agenda_onus_probatorio": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "fato_controvertido",
+                  "parte_onerada",
+                  "provas_esperadas"
+                ],
+                "properties": {
+                  "fato_controvertido": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "alegacao_autor": {
+                    "type": "string"
+                  },
+                  "alegacao_reu": {
+                    "type": "string"
+                  },
+                  "parte_onerada": {
+                    "type": "string",
+                    "enum": [
+                      "AUTOR",
+                      "REU",
+                      "INVERTIDO"
+                    ]
+                  },
+                  "fundamento_onus": {
+                    "type": "string"
+                  },
+                  "provas_esperadas": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                }
+              }
+            },
+            "perguntas_chave_pc": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "id",
+                  "pergunta",
+                  "foco_probatorio"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "pergunta": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "foco_probatorio": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "criterio_resposta": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "matriz_5_fontes": {
+              "type": "array",
+              "minItems": 5,
+              "maxItems": 5,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "fonte_id",
+                  "consulta_realizada",
+                  "status_fonte"
+                ],
+                "properties": {
+                  "fonte_id": {
+                    "type": "string",
+                    "enum": [
+                      "FONTE_A_BDIR",
+                      "FONTE_B_POSTULATORIA",
+                      "FONTE_C_INSTRUTORIA",
+                      "FONTE_D_ALEGACOES_FINAIS",
+                      "FONTE_E_PARECER_MP"
+                    ]
+                  },
+                  "consulta_realizada": {
+                    "type": "boolean"
+                  },
+                  "status_fonte": {
+                    "type": "string",
+                    "enum": [
+                      "CONFIRMOU",
+                      "PARCIAL",
+                      "NAO_CONFIRMOU",
+                      "NAO_APLICAVEL"
+                    ]
+                  },
+                  "anchor_evidencia": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^\\[AIP: [0-9]+\\]$"
+                    }
+                  },
+                  "conteudo_extraido": {
+                    "type": "string"
+                  },
+                  "observacao": {
+                    "type": "string"
+                  }
+                }
+              },
+              "allOf": [
+                {
+                  "contains": {
+                    "type": "object",
+                    "properties": {
+                      "fonte_id": {
+                        "const": "FONTE_A_BDIR"
+                      }
+                    },
+                    "required": [
+                      "fonte_id"
+                    ]
+                  }
+                },
+                {
+                  "contains": {
+                    "type": "object",
+                    "properties": {
+                      "fonte_id": {
+                        "const": "FONTE_B_POSTULATORIA"
+                      }
+                    },
+                    "required": [
+                      "fonte_id"
+                    ]
+                  }
+                },
+                {
+                  "contains": {
+                    "type": "object",
+                    "properties": {
+                      "fonte_id": {
+                        "const": "FONTE_C_INSTRUTORIA"
+                      }
+                    },
+                    "required": [
+                      "fonte_id"
+                    ]
+                  }
+                },
+                {
+                  "contains": {
+                    "type": "object",
+                    "properties": {
+                      "fonte_id": {
+                        "const": "FONTE_D_ALEGACOES_FINAIS"
+                      }
+                    },
+                    "required": [
+                      "fonte_id"
+                    ]
+                  }
+                },
+                {
+                  "contains": {
+                    "type": "object",
+                    "properties": {
+                      "fonte_id": {
+                        "const": "FONTE_E_PARECER_MP"
+                      }
+                    },
+                    "required": [
+                      "fonte_id"
+                    ]
+                  }
+                }
+              ]
+            },
+            "ficha_consolidada_pc": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "bdir_exige",
+                "provas_esperadas_por_onus",
+                "postulatoria_autor_juntou",
+                "postulatoria_reu_juntou",
+                "instrutoria_juiz_deferiu",
+                "aleg_finais_autor_cita",
+                "aleg_finais_reu_cita",
+                "parecer_mp",
+                "onus"
+              ],
+              "properties": {
+                "bdir_exige": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "provas_esperadas_por_onus": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "parte_onerada",
+                      "prova_esperada"
+                    ],
+                    "properties": {
+                      "parte_onerada": {
+                        "type": "string",
+                        "enum": [
+                          "AUTOR",
+                          "REU",
+                          "INVERTIDO"
+                        ]
+                      },
+                      "prova_esperada": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                },
+                "postulatoria_autor_juntou": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/item_ancorado"
+                  }
+                },
+                "postulatoria_reu_juntou": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/item_ancorado"
+                  }
+                },
+                "instrutoria_juiz_deferiu": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "aleg_finais_autor_cita": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/citacao_ancorada"
+                  }
+                },
+                "aleg_finais_reu_cita": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/citacao_ancorada"
+                  }
+                },
+                "parecer_mp": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/citacao_ancorada"
+                  }
+                },
+                "onus": {
+                  "type": "string",
+                  "enum": [
+                    "AUTOR",
+                    "REU",
+                    "INVERTIDO"
+                  ]
+                }
+              }
+            },
+            "status_pvp_pc": {
+              "type": "string",
+              "enum": [
+                "PRIMARIA_CONFIRMADA",
+                "ALERTA_DE_FONTE_SECUNDARIA",
+                "LACUNA_DE_COBERTURA"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "$defs": {
+      "item_ancorado": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "descricao",
+          "anchor"
+        ],
+        "properties": {
+          "descricao": {
+            "type": "string",
+            "minLength": 1
+          },
+          "anchor": {
+            "type": "string",
+            "pattern": "^\\[AIP: [0-9]+\\]$"
+          }
+        }
+      },
+      "citacao_ancorada": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "citacao",
+          "anchor"
+        ],
+        "properties": {
+          "citacao": {
+            "type": "string",
+            "minLength": 1
+          },
+          "anchor": {
+            "type": "string",
+            "pattern": "^\\[AIP: [0-9]+\\]$"
+          }
+        }
+      }
+    }
+  },
+  "schemas:M3ProvasAuditadasPorPC.v1": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "schemas:M3ProvasAuditadasPorPC.v1",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "schema_version",
+      "modulo",
+      "pcs"
+    ],
+    "properties": {
+      "schema_version": {
+        "const": "M3ProvasAuditadasPorPC.v1"
+      },
+      "modulo": {
+        "const": "M3"
+      },
+      "pcs": {
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "pc_id",
+            "pc_descricao",
+            "auditoria_provas",
+            "perguntas_chave_auditadas",
+            "status_pc"
+          ],
+          "properties": {
+            "pc_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "pc_descricao": {
+              "type": "string",
+              "minLength": 1
+            },
+            "auditoria_provas": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "parte_onerada",
+                  "prova_esperada",
+                  "status_validacao_pvp"
+                ],
+                "properties": {
+                  "parte_onerada": {
+                    "type": "string",
+                    "enum": [
+                      "AUTOR",
+                      "REU",
+                      "INVERTIDO"
+                    ]
+                  },
+                  "prova_esperada": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "estrategia_busca": {
+                    "type": "string",
+                    "enum": [
+                      "ANCORA",
+                      "CLASSIFICACAO",
+                      "MISTA"
+                    ]
+                  },
+                  "referencias_mapa_monk": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "evidencias_primarias": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/item_ancorado"
+                    }
+                  },
+                  "dados_fatuais_extraidos": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "status_validacao_pvp": {
+                    "type": "string",
+                    "enum": [
+                      "PRIMARIA_CONFIRMADA",
+                      "ALERTA_DE_FONTE_SECUNDARIA",
+                      "LACUNA_DE_COBERTURA"
+                    ]
+                  },
+                  "classificacao_lacuna": {
+                    "type": "string",
+                    "enum": [
+                      "LACUNA_INTRINSECA",
+                      "LACUNA_CRITICA"
+                    ]
+                  },
+                  "observacao": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "perguntas_chave_auditadas": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "id",
+                  "pergunta",
+                  "ponto_controvertido",
+                  "status"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "pergunta": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "ponto_controvertido": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "resposta_factual": {
+                    "type": "string"
+                  },
+                  "prova_base": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "RESPONDIDA",
+                      "PENDENTE",
+                      "PARCIALMENTE_RESPONDIDA"
+                    ]
+                  }
+                }
+              }
+            },
+            "status_pc": {
+              "type": "string",
+              "enum": [
+                "COBERTO",
+                "PARCIAL",
+                "SEM_COBERTURA"
+              ]
+            },
+            "observacao_pc": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "$defs": {
+      "item_ancorado": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "descricao",
+          "anchor"
+        ],
+        "properties": {
+          "descricao": {
+            "type": "string",
+            "minLength": 1
+          },
+          "anchor": {
+            "type": "string",
+            "pattern": "^\\[AIP: [0-9]+\\]$"
+          }
+        }
+      }
+    }
+  },
+  "schemas:M4ValoracaoFaticaPreGate.v1": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "schemas:M4ValoracaoFaticaPreGate.v1",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "schema_version",
+      "modulo",
+      "pontos"
+    ],
+    "properties": {
+      "schema_version": {
+        "const": "M4ValoracaoFaticaPreGate.v1"
+      },
+      "modulo": {
+        "const": "M4"
+      },
+      "pontos": {
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id_ponto_controvertido",
+            "descricao",
+            "status_fatico",
+            "alerta_completude",
+            "classificacoes_nucleares"
+          ],
+          "properties": {
+            "id_ponto_controvertido": {
+              "type": "string",
+              "minLength": 1
+            },
+            "descricao": {
+              "type": "string",
+              "minLength": 1
+            },
+            "status_fatico": {
+              "type": "string",
+              "enum": [
+                "FATO_PROVADO_DIRETO",
+                "FATO_ATESTADO_POR_FE_PUBLICA",
+                "FATO_NAO_PROVADO"
+              ]
+            },
+            "alerta_completude": {
+              "type": "boolean"
+            },
+            "classificacoes_nucleares": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "classificacao",
+                  "anchor",
+                  "status_fluxo"
+                ],
+                "properties": {
+                  "classificacao": {
+                    "type": "string",
+                    "enum": [
+                      "FATO_LITERAL",
+                      "DEDUCAO_AUTORIZADA",
+                      "INFERENCIA_BLOQUEADA"
+                    ]
+                  },
+                  "anchor": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "bdir_rule_id": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "status_fluxo": {
+                    "type": "string",
+                    "enum": [
+                      "MANTER_FLUXO",
+                      "BLOQUEAR_E_RETORNAR_M3"
+                    ]
+                  }
+                }
+              }
+            },
+            "observacao": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  },
+  "schemas:M4DeliberacaoDecisoria.v1": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "schemas:M4DeliberacaoDecisoria.v1",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "schema_version",
+      "modulo",
+      "process_id",
+      "status_decisorio",
+      "pontos",
+      "decisoes_por_pedido",
+      "validacao_mecanica_merito"
+    ],
+    "properties": {
+      "schema_version": {
+        "const": "M4DeliberacaoDecisoria.v1"
+      },
+      "modulo": {
+        "const": "M4"
+      },
+      "process_id": {
+        "type": "string",
+        "minLength": 1
+      },
+      "status_decisorio": {
+        "type": "string",
+        "enum": [
+          "APTO_PARA_MINUTA",
+          "NAO_APTO_PARA_MINUTA"
+        ]
+      },
+      "pontos": {
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id_ponto_controvertido",
+            "descricao",
+            "status_fatico",
+            "fundamento_decisorio",
+            "cadeia_btext_sugerida"
+          ],
+          "properties": {
+            "id_ponto_controvertido": {
+              "type": "string",
+              "minLength": 1
+            },
+            "descricao": {
+              "type": "string",
+              "minLength": 1
+            },
+            "status_fatico": {
+              "type": "string",
+              "enum": [
+                "FATO_PROVADO_DIRETO",
+                "FATO_ATESTADO_POR_FE_PUBLICA",
+                "FATO_NAO_PROVADO"
+              ]
+            },
+            "alerta_completude": {
+              "type": "boolean",
+              "default": false
+            },
+            "fundamento_decisorio": {
+              "type": "string",
+              "minLength": 1
+            },
+            "cadeia_btext_sugerida": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "decisoes_por_pedido": {
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "pedido_id",
+            "resultado",
+            "fundamento_resumido",
+            "pontos_relacionados",
+            "origem_fundamento_decisao",
+            "bdir_rule_id",
+            "status_auditoria_fundamento"
+          ],
+          "properties": {
+            "pedido_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "resultado": {
+              "type": "string",
+              "enum": [
+                "ACOLHIDO",
+                "ACOLHIDO_PARCIALMENTE",
+                "REJEITADO"
+              ]
+            },
+            "fundamento_resumido": {
+              "type": "string",
+              "minLength": 1
+            },
+            "pontos_relacionados": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "origem_fundamento_decisao": {
+              "type": "string",
+              "enum": [
+                "BDIR_EXPLICITO",
+                "INFERENCIA_CONTROLADA",
+                "INFERENCIA_GENERICA"
+              ]
+            },
+            "bdir_rule_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "status_auditoria_fundamento": {
+              "type": "string",
+              "enum": [
+                "RASTREAVEL_BDIR",
+                "RASTREAVEL_INFERENCIA_CONTROLADA",
+                "ALERTA_INFERENCIA_GENERICA"
+              ]
+            }
+          }
+        }
+      },
+      "validacao_mecanica_merito": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "ponto_controvertido_id",
+            "classificacao",
+            "anchor",
+            "bdir_rule_id",
+            "status_fluxo"
+          ],
+          "properties": {
+            "ponto_controvertido_id": {
+              "type": "string"
+            },
+            "classificacao": {
+              "type": "string",
+              "enum": [
+                "FATO_LITERAL",
+                "DEDUCAO_AUTORIZADA",
+                "INFERENCIA_BLOQUEADA"
+              ]
+            },
+            "anchor": {
+              "type": "string"
+            },
+            "bdir_rule_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "status_fluxo": {
+              "type": "string",
+              "enum": [
+                "MANTER_FLUXO",
+                "BLOQUEAR_E_RETORNAR_M3"
+              ]
+            }
+          }
+        }
+      },
+      "observacoes": {
+        "type": "string"
+      }
+    }
+  },
+  "schemas:M4ProvasDeterminantesPorPedido.v1": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "schemas:M4ProvasDeterminantesPorPedido.v1",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "schema_version",
+      "modulo",
+      "process_id",
+      "itens"
+    ],
+    "properties": {
+      "schema_version": {
+        "const": "M4ProvasDeterminantesPorPedido.v1"
+      },
+      "modulo": {
+        "const": "M4"
+      },
+      "process_id": {
+        "type": "string",
+        "minLength": 1
+      },
+      "itens": {
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "pedido_id",
+            "ponto_controvertido_id",
+            "descricao_prova",
+            "anchor",
+            "origem_fonte",
+            "papel_na_deliberacao",
+            "origem_rastro",
+            "status_vinculo"
+          ],
+          "properties": {
+            "pedido_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "ponto_controvertido_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "descricao_prova": {
+              "type": "string",
+              "minLength": 1
+            },
+            "anchor": {
+              "type": "string",
+              "pattern": "^\\[AIP: [0-9]+(/[0-9]+)?\\]$"
+            },
+            "origem_fonte": {
+              "type": "string",
+              "enum": [
+                "PRIMARIA_PROCESSO"
+              ]
+            },
+            "papel_na_deliberacao": {
+              "type": "string",
+              "enum": [
+                "DETERMINANTE",
+                "CORROBORATIVA"
+              ]
+            },
+            "origem_rastro": {
+              "type": "string",
+              "enum": [
+                "out_m4_deliberacao_decisoria.validacao_mecanica_merito",
+                "out_m4_deliberacao_decisoria.decisoes_por_pedido",
+                "out_decision_context.quadro_probatorio"
+              ]
+            },
+            "status_vinculo": {
+              "type": "string",
+              "enum": [
+                "VALIDO",
+                "PENDENTE_AJUSTE"
+              ]
+            },
+            "observacao": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  },
+  "schemas:M5RastroCitacional.v1": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "schemas:M5RastroCitacional.v1",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "schema_version",
+      "modulo",
+      "process_id",
+      "citacoes"
+    ],
+    "properties": {
+      "schema_version": {
+        "const": "M5RastroCitacional.v1"
+      },
+      "modulo": {
+        "enum": [
+          "M2b",
+          "M5"
+        ]
+      },
+      "process_id": {
+        "type": "string",
+        "minLength": 1
+      },
+      "citacoes": {
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "citacao_id",
+            "etapa",
+            "secao",
+            "tipo_mencao",
+            "referencia_textual",
+            "anchor",
+            "fonte_vinculo",
+            "status_vinculo"
+          ],
+          "properties": {
+            "citacao_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "etapa": {
+              "type": "string",
+              "enum": [
+                "M2B_RELATORIO",
+                "M5_FUNDAMENTACAO_DISPOSITIVO"
+              ]
+            },
+            "secao": {
+              "type": "string",
+              "minLength": 1
+            },
+            "tipo_mencao": {
+              "type": "string",
+              "enum": [
+                "PECA_PROCESSUAL",
+                "DOCUMENTO",
+                "PROVA",
+                "ATO_PROCESSUAL"
+              ]
+            },
+            "referencia_textual": {
+              "type": "string",
+              "minLength": 1
+            },
+            "anchor": {
+              "type": "string",
+              "pattern": "^\\[AIP: [0-9]+(/[0-9]+)?\\]$"
+            },
+            "pedido_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "ponto_controvertido_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "fonte_vinculo": {
+              "type": "string",
+              "enum": [
+                "out_m2_lide_base.fontes_estruturantes",
+                "out_mapa_monk",
+                "out_m2_relatorio",
+                "out_m4_provas_determinantes_por_pedido",
+                "out_decision_panel.validacao_mecanica_merito",
+                "out_decision_context.view_m2",
+                "out_relatorio_sentenca",
+                "out_m5_fundamentacao_dispositivo"
+              ]
+            },
+            "status_vinculo": {
+              "type": "string",
+              "enum": [
+                "VINCULADA",
+                "PENDENTE_CORRECAO"
+              ]
+            },
+            "observacao": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

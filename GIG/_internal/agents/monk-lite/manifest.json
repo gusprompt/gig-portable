@@ -1,0 +1,50 @@
+{
+  "format_version": 1,
+  "version": "0.1.0-experimental",
+  "kind": "see_py_modular_agent",
+  "agent_source": "dist/agent.monk-lite.json",
+  "output_file": "dist/agent.monk-lite.json",
+  "parts": {
+    "metadata": "metadata.json",
+    "boot": "boot.json",
+    "schemas": "schemas.json",
+    "extras": "extras.json"
+  },
+  "modules": [
+    {
+      "id_canonico": "M1",
+      "fase": "M1",
+      "file": "modules/m1.json"
+    },
+    {
+      "id_canonico": "M2a",
+      "fase": "M2a",
+      "file": "modules/m2a.json"
+    },
+    {
+      "id_canonico": "M2b",
+      "fase": "M2b",
+      "file": "modules/m2b.json"
+    },
+    {
+      "id_canonico": "M3",
+      "fase": "M3",
+      "file": "modules/m3.json"
+    },
+    {
+      "id_canonico": "M4",
+      "fase": "M4",
+      "file": "modules/m4.json"
+    },
+    {
+      "id_canonico": "M5",
+      "fase": "M5",
+      "file": "modules/m5.json"
+    },
+    {
+      "id_canonico": "M6",
+      "fase": "M6",
+      "file": "modules/m6.json"
+    }
+  ]
+}

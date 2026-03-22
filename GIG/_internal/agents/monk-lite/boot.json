@@ -1,0 +1,57 @@
+{
+  "modulo_inicial": "M1",
+  "bases_conhecimento": {
+    "BDir": "bdir_monk.json",
+    "BText": "btext_monk.json"
+  },
+  "input_aliases": {
+    "in_processo_completo": [
+      "processo_completo.pdf",
+      "*/processo_completo.pdf",
+      "pecas_selecionadas_*.pdf",
+      "*/pecas_selecionadas_*.pdf"
+    ],
+    "in_sumario_completo": [
+      "sumario_completo.json",
+      "*/sumario_completo.json",
+      "processo_completo/sumario_pecas_completo.json",
+      "*/processo_completo/sumario_pecas_completo.json",
+      "sumario_pecas_completo.json",
+      "sumario_pecas_selecionadas_*.json",
+      "*/sumario_pecas_completo.json",
+      "*/sumario_pecas_selecionadas_*.json"
+    ],
+    "in_context_map_grouped": [
+      "in_context_map_grouped.json",
+      "*/in_context_map_grouped.json"
+    ],
+    "in_processo_texto_ancorado": [
+      "Monk/preprocess/processo_texto_ancorado.txt",
+      "*/Monk/preprocess/processo_texto_ancorado.txt"
+    ],
+    "in_alerta_visual": [
+      "Monk/preprocess/alerta_visual_resumo.md",
+      "*/Monk/preprocess/alerta_visual_resumo.md",
+      "Monk/entrada/in_Alerta_Visual.md",
+      "*/Monk/entrada/in_Alerta_Visual.md"
+    ]
+  },
+  "schemas_globais": [
+    "schemas:ArtefatoTeto.v1",
+    "schemas:MapaMonkCompleto.v1",
+    "schemas:QuadroProbatorio.v1",
+    "schemas:PerguntasChaveResolvidas.v1",
+    "schemas:DecisionContext.v1",
+    "schemas:DecisionPanel.v1",
+    "schemas:M2LideBase.v1",
+    "schemas:ViewM1.v1",
+    "schemas:ViewM4.v1",
+    "schemas:M2ControversiaSaneada.v1",
+    "schemas:M3OnusProbatorio5Fontes.v1",
+    "schemas:M3ProvasAuditadasPorPC.v1",
+    "schemas:M4ValoracaoFaticaPreGate.v1",
+    "schemas:M4DeliberacaoDecisoria.v1",
+    "schemas:M4ProvasDeterminantesPorPedido.v1",
+    "schemas:M5RastroCitacional.v1"
+  ]
+}

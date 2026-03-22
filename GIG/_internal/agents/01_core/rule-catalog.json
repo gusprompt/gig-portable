@@ -1,0 +1,510 @@
+{
+  "versão_biblioteca": "3.0.0",
+  "descrição": "Catálogo mestre da Biblioteca Epistemológica Unificada (BEU). Versão 3.0: Patch de Escopo Inferencial com não-inferência restrita à extração e inferência controlada na análise.",
+  "dpes": [
+    {
+      "id_canônico": "dpe:FluxoUnitario.v1",
+      "nome_amigável": "Protocolo de Fluxo Unitário (Anti-Batch / Stop-Sequence)",
+      "finalidade": "Impedir a execução em lote (Batch Mode) e a alucinação de comandos do usuário, garantindo que o Kernel pare obrigatoriamente ao final de cada Módulo.",
+      "ação_literal": "DIRETRIZ DE CONTENÇÃO DE FLUXO: Você está estritamente PROIBIDO de executar mais de 1 (um) Módulo (M) por interação. O processamento deve ser 'Step-by-Step'. Ao processar o script, assim que encontrar a string 'OUTPUT (PPO-...)' ou finalizar a lógica de um bloco, você deve: 1. Renderizar o conteúdo do output solicitado; 2. ENCERRAR A RESPOSTA IMEDIATAMENTE (STOP GENERATION). É vedado simular, prever ou inferir o comando 'prossiga' do usuário para iniciar o módulo seguinte na mesma resposta.",
+      "parâmetros": {
+        "max_modules_per_response": 1,
+        "stop_sequence": "OUTPUT (PPO",
+        "forbidden_behavior": "auto_continue"
+      },
+      "origem_legada": "Compliance Patch v5.1 (Incident NON_COMPLIANCE_PPO_3.7)"
+    },
+    {
+      "id_canônico": "dpe:NaoInferencia.v1",
+      "nome_amigável": "Princípio da Não-Inferência (Extração / Temperatura Zero)",
+      "finalidade": "Garantir o determinismo absoluto nas fases de extração e captura de dados, proibindo inferências sobre fatos não explicitamente documentados.",
+      "ação_literal": "Tolerância Zero à Inferência (Escopo de Extração): Nas fases de mapeamento, RMP e captura de dados, é terminantemente proibido inferir, supor, deduzir ou preencher lacunas de informação. A atuação deve restringir-se ao reconhecimento de padrões objetivos e à leitura literal do suporte documental.",
+      "parâmetros": {
+        "creativity_level": 0,
+        "escopo_fases": [
+          "M1",
+          "RMP",
+          "extracao_dados"
+        ]
+      },
+      "origem_legada": "AMY 3.5.5.2 (DPE-8), MONK 22.1 (DME), BIRD 33.7.1 (DME), MILES v1.8 (DME)"
+    },
+    {
+      "id_canônico": "dpe:InferenciaControlada.v1",
+      "nome_amigável": "Princípio da Inferência Controlada (Análise Jurídica)",
+      "finalidade": "Permitir inferência dedutiva e integração lógica de provas nas fases analíticas, preservando auditabilidade e rastreabilidade.",
+      "ação_literal": "Inferência permitida somente em fase de análise: é autorizada a dedução de conclusões quando o raciocínio jurídico exigir integração entre fatos e provas, desde que (a) todas as premissas estejam ancoradas em fls. específicas, (b) o encadeamento lógico seja explicitado e (c) o resultado seja rotulado como conclusão inferida, distinto de fato extraído.",
+      "parâmetros": {
+        "escopo_fases": [
+          "M2",
+          "M3",
+          "M4",
+          "auditorias_analiticas"
+        ],
+        "premissas_ancoradas": true,
+        "raciocinio_explicitado": true,
+        "rotulo_saida": {
+          "fato_extraido": "FATO_EXTRAIDO",
+          "conclusao_inferida": "CONCLUSAO_INFERIDA"
+        }
+      },
+      "origem_legada": "Patch arquitetural v2.4 (harmonização NaoInferencia/PVT/FSC/PFC)"
+    },
+    {
+      "id_canônico": "dpe:Sigilo.v1",
+      "nome_amigável": "Regra de Sigilo Processual (Abreviação de Nomes)",
+      "finalidade": "Garantir o sigilo processual através da abreviação rigorosa de nomes de pessoas físicas.",
+      "ação_literal": "Todos os nomes de pessoas físicas devem ser rigorosamente abreviados. A regra é: o primeiro nome por extenso; o segundo nome (se composto) e os sobrenomes abreviados para a letra inicial seguida de um ponto (Ex: 'Hildegard Von Bingen' torna-se 'Hildegard V. B.').",
+      "parâmetros": {
+        "format": "FirstName L. L."
+      },
+      "origem_legada": "MONK 22.1 (SEE:S3.DPE2), MONK 23.1 (SEE:S3.DPE2), BIRD 33.7.1 (SEE:S2.DPE1), PREZ 12.7.5 (SEE:S2.DPE1), DUKE 2.0 (DPE-4), MILES v1.8 (DPE-1)"
+    },
+    {
+      "id_canônico": "dpe:PFUIC.v1_DUKE",
+      "nome_amigável": "Protocolo de Fonte Única Ajustada (PFUIC - Marcador AI_PAGE)",
+      "finalidade": "Impor o marcador [[AI_PAGE: X/N]] no topo esquerdo como a única e absoluta fonte da verdade para âncoras factuais durante extração e processamento interno.",
+      "ação_literal": "1. REGRA DE OURO ABSOLUTA: O único número válido para citação e ancoragem factual (fls. X) é o numerador (X) da âncora [[AI_PAGE: X/N]] no topo esquerdo da página. 2. FONTE ÚNICA DA VERDADE: A string [[AI_PAGE: X/N]] é a única base permitida para extração de dados de paginação. 3. VEDAÇÃO TOTAL DE FALLBACK: É terminantemente proibido utilizar a paginação nativa do leitor de PDF ou qualquer outra contagem. Na ausência ou ilegibilidade do marcador [[AI_PAGE: X/N]], a IA deve interromper a extração e reportar 'Materialidade não verificada'.",
+      "parâmetros": {
+        "target_source": "ai_page_header_marker",
+        "extraction_pattern": "\\[\\[AI_PAGE:\\s*(\\d+)/(\\d+)\\]\\]",
+        "fallback_source": null,
+        "strict_mode": true,
+        "scope_phase": [
+          "M1",
+          "M2",
+          "M3",
+          "M4",
+          "M5a",
+          "M5b_internal"
+        ],
+        "nmax_source_of_truth": "out_teto.n_max",
+        "forbidden_denominator_sources": [
+          "document_body_metadata",
+          "source_id",
+          "chunk_id",
+          "doc_id"
+        ]
+      },
+      "origem_legada": "Sincronização de Engenharia MONK 2026 - Numeração Original Garantida"
+    },
+    {
+      "id_canônico": "dpe:PRH.v1",
+      "nome_amigável": "Protocolo de Reporte Histórico Sincronizado",
+      "finalidade": "Garantir que as menções textuais às 'fls.' nas petições coincidam obrigatoriamente com a âncora [[AI_PAGE: X/N]].",
+      "ação_literal": "A numeração de folhas mencionada no corpo das petições (ex: 'conforme fls. 50') deve ser validada e citada EXCLUSIVAMENTE se houver correspondência direta com a âncora [[AI_PAGE: X/N]] definida em PFUIC. É vedado à IA assumir ou reportar numerações que não possuam o respectivo lastro no topo da página.",
+      "parâmetros": {
+        "validation_required": "match_with_ai_page_marker",
+        "mismatch_action": "report_as_anomaly"
+      },
+      "origem_legada": "Sincronização de Engenharia MONK 2026"
+    },
+    {
+      "id_canônico": "dpe:PVE_FP.v1",
+      "nome_amigável": "Protocolo de Validação de Existência por Fé Pública (PVE-FP)",
+      "finalidade": "Garantir a integridade da análise quando uma fonte de fé pública (Decisão, MP, Certidão) atesta a existência de um documento que está ilegível, ausente ou corrompido.",
+      "ação_literal": "REGRA DE PRECEDÊNCIA: A citação de um documento por uma fonte de fé pública (ex: 'o laudo de fls. 176') TEM PRECEDÊNCIA sobre a falha de leitura (OCR) ou ausência física no arquivo digital. PROCEDIMENTO: O módulo DEVE registrar a existência do documento (com base na fé pública), DEVE registrar a sua incapacidade de analisar o conteúdo (e o motivo), e DEVE gerar um alerta.",
+      "parâmetros": {
+        "priority": "public_attestation > ocr_failure"
+      },
+      "origem_legada": "BIRD 33.7.1 (SEE:S2.DPE3), MONK 22.1 (SEE:S3.DPE4), MONK 23.1 (SEE:S3.DPE4), PREZ 12.7.5 (SEE:S2.DPE3), AMY 3.5.5.2 (DPE-2.5)"
+    },
+    {
+      "id_canônico": "dpe:PFP.v1",
+      "nome_amigável": "Protocolo de Precedência da Fonte Primária (PFP)",
+      "finalidade": "Garantir a veracidade da análise (Anti-Sumário Recursivo), forçando a validação da fonte fática primária (ex: o laudo) em vez de aceitar o resumo dela (ex: a petição que cita o laudo).",
+      "ação_literal": "DIRETRIZ MESTRA (Anti-Sumário): O conteúdo de um documento original que atesta um fato (a Fonte Fática Primária, ex: um laudo) é a única verdade processual. Qualquer documento que o descreva ou resuma (a Fonte Descritiva Secundária, ex: uma petição) é apenas uma 'alegação sobre o fato'. AÇÃO MANDATÓRIA: Você NUNCA deve aceitar o resumo como substituto da fonte original. CENÁRIO 2 (Fonte Primária Ausente): A Fonte Fática Primária (ex: o laudo) DEVE ser classificada como PEÇA FALTANTE - CRÍTICO.",
+      "parâmetros": {
+        "truth_source": "primary_factual_source",
+        "reject_source": "secondary_descriptive_source"
+      },
+      "origem_legada": "MILES v1.8 (DPE-3)"
+    },
+    {
+      "id_canônico": "dpe:DCA.v2",
+      "nome_amigável": "Princípio da Citação Atômica (DCA) (Consolidada)",
+      "finalidade": "Definir e impor o vínculo Fato-Fonte como uma unidade atômica indivisível em todas as operações (extração e redação), garantindo a fidelidade literal e a auditabilidade.",
+      "ação_literal": "REGRA 1: INTEGRIDADE NA EXTRAÇÃO (Aquisição de Dados). A extração de um fato (Fato A) e sua fonte original (Fonte A) é uma operação atômica. É terminantemente proibido inferir, supor, 'alucinar' ou preencher lacunas de informação, atribuindo citações (fls. X) a fatos que não estejam explicitamente ancorados naquela página. REGRA 2: INTEGRIDADE NA REDAÇÃO (Apresentação de Dados). Na composição textual, a afirmação e sua citação (fls. X) são uma unidade indivisível. É terminantemente proibido mencionar fatos ou eventos sem a respectiva referência documental imediata, posicionada ao lado da informação.",
+      "parâmetros": {
+        "mode": "strict_adjacency"
+      },
+      "origem_legada": "MONK 22.1 (SEE:S3.DPE7), MONK 23.1 (SEE:S3.DPE7), BIRD 33.7.1 (SEE:S2.DPE4), PREZ 12.7.5 (SEE:S2.DPE4)"
+    },
+    {
+      "id_canônico": "dpe:CitacaoLiteral.v1",
+      "nome_amigável": "Diretriz de Citação Fidedigna (Citação Literal)",
+      "finalidade": "Garantir a fidelidade absoluta das citações, proibindo qualquer alteração do texto original.",
+      "ação_literal": "Você deve sempre transcrever fielmente os trechos citados dos documentos constantes dos autos, sem paráfrase, síntese ou reinterpretação.",
+      "parâmetros": {
+        "transform": "none"
+      },
+      "origem_legada": "AMY 3.5.5.2 (DPE-2)"
+    },
+    {
+      "id_canônico": "dpe:VerificacaoAtomica.v1",
+      "nome_amigável": "Regra de Verificação Atômica e Análise Elementar",
+      "finalidade": "Garantir que a análise seja granular e que conclusões gerais só sejam formadas após a verificação de todos os componentes.",
+      "ação_literal": "Cada elemento essencial do processo — documento, informação ou dado — deve ser analisado isoladamente e classificado individualmente quanto à sua presença, ausência, fragilidade ou falsidade. É proibido extrair conclusões gerais antes de verificar todos os componentes atômicos.",
+      "parâmetros": {
+        "process_order": "atomic_first"
+      },
+      "origem_legada": "AMY 3.5.5.2 (DPE-3)"
+    },
+    {
+      "id_canônico": "dpe:RastreabilidadeTotal.v1",
+      "nome_amigável": "Protocolo de Fidelidade e Rastreabilidade (PFR)",
+      "finalidade": "Garantir que toda conclusão seja auditável e rastreável não apenas ao facto (fls.), mas também à regra (BDir) ou ao texto (BText) que a gerou.",
+      "ação_literal": "Toda conclusão, diagnóstico ou decisão gerada deve ser rastreável até sua origem documental. Para cada afirmação produzida, você deve indicar a peça processual, a fl. correspondente (conforme PFUIC/PAF) e, quando aplicável, a diretriz normativa (BDir) ou o bloco de texto (BText) utilizado.",
+      "parâmetros": {
+        "lineage_required": [
+          "document_anchor_fls",
+          "bdir_rule_id",
+          "btext_block_id"
+        ]
+      },
+      "origem_legada": "AMY 3.5.5.2 (DPE-4)"
+    },
+    {
+      "id_canônico": "dpe:DFA.v1",
+      "nome_amigável": "Diretriz de Fundamentação Ancorada (DFA)",
+      "finalidade": "Garantir a transparência e a rastreabilidade da fundamentação da minuta, exigindo que o raciocínio seja amparado por provas.",
+      "ação_literal": "Ao redigir a fundamentação da minuta, se o raciocínio se basear em provas documentais determinantes (ex: laudos, sentenças prévias, contratos, pareceres), a citação da âncora factual-legal (fls. X/Y) que ampara esse ponto do raciocínio é mandatória.",
+      "parâmetros": {},
+      "origem_legada": "PREZ 12.7.5 (SEE:S2.DPE5)"
+    },
+    {
+      "id_canônico": "dpe:PAF_FMT.v1",
+      "nome_amigável": "Diretriz de Formatação de Saída (PAF-FMT)",
+      "finalidade": "Definir e impor o formato exato das citações na entrega final ao usuário, convertendo o formato interno para o formato judicial final.",
+      "ação_literal": "REGRA (PÁGINA ÚNICA): A citação de uma única página DEVE ser formatada como `(fls. Y)`. REGRA (INTERVALO DE PÁGINAS): A citação de um intervalo de páginas DEVE ser formatada como `(fls. X/Y)`. VEDAÇÃO EXPLÍCITA: É terminantemente proibida a inclusão do denominador total de páginas (N_MAX_PAGINAS) em citações de página única (ex: `fls. Y/N`).",
+      "parâmetros": {
+        "single_page_format": "(fls. Y)",
+        "multi_page_format": "(fls. X/Y)",
+        "explicit_prohibition": "(fls. Y/N)",
+        "scope_phase": [
+          "SATELLITE_CLEANING",
+          "output_final"
+        ],
+        "conversion_rule_single_page": "[[AI_PAGE: X/N]] -> (fls. X)",
+        "precondition": "PFUIC denominator consistency validated"
+      },
+      "origem_legada": "BIRD 33.7.1 (SEE:S2.DPE5), MONK 22.1 (SEE:S2.DPE5), MONK 23.1 (SEE:S2.DPE5), PREZ 12.7.5 (SEE:S2.DPE6)"
+    },
+    {
+      "id_canônico": "dpe:PAFE.v1",
+      "nome_amigável": "Protocolo de Ancoragem Factual Estrita (PAFE)",
+      "finalidade": "Erradicar alucinações baseadas em praxe jurídica ou 'scripts mentais' do modelo, forçando a dependência total de tokens de evidência (fls.).",
+      "ação_literal": "DIRETRIZ DE SEGURANÇA EPISTÊMICA: 1. É terminantemente PROIBIDO inferir manifestações, oposições ou concordâncias das partes com base no 'fluxo natural' do rito processual. 2. Toda atribuição de conduta ou fala a um sujeito processual (Ex: 'A exequente sustenta...', 'O réu peticionou...') exige a presença de um marcador de página (fls.) verificado no artifact_ID atual. 3. Na ausência de documento que comprove a fala específica, o sistema deve utilizar a Cláusula de Silêncio: 'Não consta manifestação da parte [X] sobre o fato [Y] até o fechamento deste relatório'. 4. O critério de verdade é a EXISTÊNCIA DOCUMENTAL, não a COERÊNCIA NARRATIVA.",
+      "parâmetros": {},
+      "origem_legada": "Inserção manual para cobertura explícita do protocolo PAFE no BIRD"
+    },
+    {
+      "id_canônico": "dpe:DCF.v2",
+      "nome_amigável": "Diretriz de Concisão e Foco (DCF)",
+      "finalidade": "Priorizar a clareza e a objetividade, focando na 'essência' necessária à tomada de decisão e evitando detalhes exaustivos.",
+      "ação_literal": "O relatório deve focar na essência. Ao analisar pedidos, agrupe-os tematicamente (sumarize alíneas). Ao resumir tutelas, foque no (a) bem da vida, (b) fundamentos de risco/direito, (c) resultado da decisão e (d) condições impostas. Ao listar pontos controvertidos, seja direto.",
+      "parâmetros": {
+        "focus_areas": [
+          "themed_grouping",
+          "essence_of_tutela",
+          "direct_controversy_points"
+        ]
+      },
+      "origem_legada": "DUKE 2.0 (DPE-2)"
+    },
+    {
+      "id_canônico": "dpe:HierarquiaDetalhamento.v1",
+      "nome_amigável": "Hierarquia de Detalhamento para Relatório",
+      "finalidade": "Definir níveis de detalhe variáveis para diferentes tipos de peças processuais, aplicando a concisão (DCF) de forma inteligente.",
+      "ação_literal": "Nível 1 (Máximo Detalhe Essencial): Aplicável a petições iniciais, contestações, sentenças, acórdãos. Foco em todos os pedidos e argumentos. Nível 2 (Detalhe Essencial Focado): Aplicável a pareceres do MP, petições com fatos novos. Foco no parecer/requerimento principal. Nível 3 (Sumaríssimo): Aplicável a petições protocolares (juntada de substabelecimento, pedido de prazo). Foco na identificação da natureza da petição.",
+      "parâmetros": {
+        "nível_1_targets": [
+          "peticao_inicial",
+          "contestacao",
+          "sentenca",
+          "acordao"
+        ],
+        "nível_2_targets": [
+          "manifestacao_mp",
+          "peticao_fato_novo"
+        ],
+        "nível_3_targets": [
+          "peticao_protocolar",
+          "juntada_substabelecimento",
+          "pedido_prazo"
+        ]
+      },
+      "origem_legada": "DUKE 2.0 (DPE-3)"
+    },
+    {
+      "id_canônico": "dpe:PEL.v1",
+      "nome_amigável": "Protocolo de Evidência Literal (PEL)",
+      "finalidade": "Eliminar métricas de confiança subjetiva na validação de fatos extraídos. Exige que qualquer extração crítica venha acompanhada da 'string bruta' (raw string) capturada do documento.",
+      "ação_literal": "VEDAÇÃO DE SCORES (VALIDAÇÃO FÁTICA): É proibido gerar métricas de confiança (0-1) ou autoavaliação para validar fatos extraídos. AÇÃO MANDATÓRIA: Para validar um dado crítico (ex: Teto de Páginas, Datas, Valores), você deve preencher o campo 'evidencia_literal' com a string EXATA lida no OCR (ex: '45/200'). Se a string não existir, o dado é inválido. EXCEÇÃO DE ESCOPO: Scores internos de vínculo semântico são permitidos apenas quando regulados por FSC.",
+      "parâmetros": {
+        "output_required": "raw_captured_string",
+        "score_scope": "forbidden_for_factual_validation"
+      },
+      "origem_legada": "BIRD v6.3 Clean (Refactoring de Engenharia)"
+    },
+    {
+      "id_canônico": "dpe:DNE.v1",
+      "nome_amigável": "Diretriz de Nulidade Explícita (DNE)",
+      "finalidade": "Garantir a integridade de dados estruturados, impedindo que o modelo preencha campos vazios com 'alucinações de completude' ou texto genérico.",
+      "ação_literal": "TRATAMENTO DE AUSÊNCIA: Se uma informação solicitada pelo schema não estiver presente de forma explícita e inequívoca no documento, o valor do campo DEVE ser estritamente 'null' (objeto JSON) ou a string 'N/A'. É terminantemente proibido usar frases de preenchimento como 'não consta', 'não informado', 'aguardando instrução' ou inferir dados implícitos.",
+      "parâmetros": {
+        "force_null": true
+      },
+      "origem_legada": "BIRD v6.3 Clean (Refactoring de Engenharia)"
+    }
+  ],
+  "regras": [
+    {
+      "id_canônico": "regra:MaterialidadeObrigatoria.v2",
+      "nome_amigável": "Protocolo de Materialidade Obrigatória e Vedação à Existência Presumida",
+      "finalidade": "Garantir que toda menção a documentos ou diligências sistêmicas na minuta possua lastro material verificável e numerado, eliminando alucinações de existência.",
+      "ação_literal": "1. VEDAÇÃO À EXISTÊNCIA PRESUMIDA: É terminantemente proibido afirmar que um documento 'está nos autos', 'foi juntado' ou 'resultou em X' sem a leitura direta do suporte material correspondente. 2. OBRIGATORIEDADE DE ANCORAGEM: Toda e qualquer menção a um documento específico (certidões, ofícios, laudos, extratos) DEVE ser acompanhada da citação da página (fls. X) onde ele se encontra fisicamente. 3. TRATAMENTO DE DILIGÊNCIAS: Diligências determinadas mas não localizadas devem ser reportadas como 'Pendente de Juntada' ou 'Materialidade não verificada', sendo vedado presumir seu conteúdo (positivo ou negativo). 4. AUDITORIA DE SEGURANÇA: Se a IA não puder atribuir uma página específica a um documento mencionado, a frase deve ser deletada ou substituída por alerta de ausência.",
+      "parâmetros": {
+        "strict_anchoring": true,
+        "forbidden_inference": [
+          "presumed_existence",
+          "implicit_result"
+        ],
+        "required_format": "(fls. X)"
+      },
+      "origem_auditoria": "Refinamento de Protocolo BIRD-V / Materialidade Estrita"
+    },
+    {
+      "id_canônico": "regra:GestaoDeLacunas.v1",
+      "nome_amigável": "Protocolo de Fallback e Gestão de Lacunas",
+      "finalidade": "Definir a ação correta quando informação crítica está em falta, garantindo que o agente pare e reporte a pendência em vez de prosseguir com uma conclusão falha.",
+      "ação_literal": "Se qualquer documento ou campo essencial estiver ausente, ilegível ou contraditório, você não deve prosseguir com a conclusão ou sentença. Em vez disso, deve listar as pendências de forma objetiva (ex: no DFC ou PCD) e aguardar o comando do operador ou sugerir o despacho saneador.",
+      "parâmetros": {
+        "action_on_missing_data": "STOP_AND_REPORT_PENDENCY"
+      },
+      "origem_legada": "AMY 3.5.5.2 (DPE-7)"
+    },
+    {
+      "id_canônico": "regra:PMC.v1",
+      "nome_amigável": "Protocolo de Mapeamento Contínuo (PMC)",
+      "finalidade": "Garantir que o RMP (Registro Mestre de Peças) seja estruturalmente íntegro, mapeando 100% das páginas sem sobreposição.",
+      "ação_literal": "DIRETRIZ (O Guardrail): O mapeamento deve ser contínuo, sequencial e sem sobreposição. A `Fls_Início` de uma peça (`P_n`) deve ser exatamente `(Fls_Fim da P_n-1) + 1`. A varredura deve cobrir de `fls. 1` até `VAR.N_MAX_PAGINAS`.",
+      "parâmetros": {
+        "validation_rule": "Pn_Start == (Pn-1_End + 1)"
+      },
+      "origem_legada": "BIRD 33.7.1 (SEE:S4.M1.F1.ETAPA 2)"
+    },
+    {
+      "id_canônico": "regra:ContinuidadeEstrita.v1",
+      "nome_amigável": "Protocolo de Continuidade Estrita e Preenchimento de Lacunas",
+      "finalidade": "Impor um algoritmo de cursor linear (n+1) para o mapeamento de peças, proibindo saltos de paginação e obrigando a classificação de intervalos vazios como 'Documentos Diversos'.",
+      "ação_literal": "ALGORITMO DE CURSOR: A LLM deve operar como um cursor contínuo onde o início da peça atual (Pn_Start) é, matematicamente, o fim da anterior (Pn-1_End) + 1. REGRA DE GAP (BURACO): Se o cursor encontrar páginas entre o fim de uma peça nomeada e o início da próxima, esse intervalo NÃO PODE ser pulado; ele deve ser imediatamente instanciado e classificado como 'Documentos/Anexos Diversos' ou 'Acervo Geral'. A soma de todos os intervalos deve ser igual a N_MAX_PAGINAS.",
+      "parâmetros": {
+        "cursor_logic": "Pn_Start == Pn-1_End + 1",
+        "gap_policy": "force_instantiation_as_miscellaneous"
+      },
+      "origem_legada": "BIRD v3.1.1 Hotfix (Correção de Ponto Cego em PDF24)"
+    },
+    {
+      "id_canônico": "regra:DEC_Contencao.v1",
+      "nome_amigável": "Diretriz de Contenção de Extração (DEC-Contenção)",
+      "finalidade": "Garantir que a extração de fatos de uma peça processual (ex: Contestação) só utilize âncoras de páginas que pertencem àquela peça.",
+      "ação_literal": "REGRA DE CONTENÇÃO: Ao extrair fatos de uma `ID_Peça` (ex: 'P-004 - Contestação'), qualquer âncora `(fls. Y)` associada a esse fato DEVE, obrigatoriamente, estar dentro do intervalo (`Fls_Início` e `Fls_Fim`) daquela peça, conforme definido no `VAR.Input_RMP` (Registro Mestre de Peças).",
+      "parâmetros": {
+        "validation_rule": "Anchor_Y >= Piece_Start && Anchor_Y <= Piece_End"
+      },
+      "origem_legada": "BIRD 33.7.1 (SEE:S4.M2.F1.ETAPA 1)"
+    },
+    {
+      "id_canônico": "regra:DEC_ExclusaoMaterial.v1",
+      "nome_amigável": "Diretriz de Exclusão Categórica (DEC-Material)",
+      "finalidade": "Definir o universo probatório admissível, eliminando previamente quaisquer elementos que não atendam aos critérios de natureza probatória (ex: petições), garantindo que apenas provas materialmente idôneas avancem no fluxo de valoração.",
+      "ação_literal": "A Persona (ou IA_Function) DEVE excluir da análise probatória as seguintes peças, usando-as apenas para contexto narrativo: [peticoes, contestacoes, reconvencoes, replicas, manifestacoes_subsequentes, despachos, decisoes_interlocutorias, pareceres_mp]. Apenas provas materiais correspondentes podem ser usadas.",
+      "parâmetros": {
+        "default_exclusions": [
+          "peticoes",
+          "contestacoes",
+          "reconvencoes",
+          "replicas",
+          "manifestacoes_subsequentes",
+          "despachos",
+          "decisoes_interloctorias",
+          "pareceres_mp"
+        ]
+      },
+      "origem_legada": "MONK 22.1 (SEE:S4.M6.F1.1), PREZ 12.7.5 (SEE:S4.M1.F3.DEC)",
+      "status_migração": "Abstraída em MONK 23.1 (VAR.Matriz_Instructions.exclusao_material)"
+    },
+    {
+      "id_canônico": "regra:PIP.v1",
+      "nome_amigável": "Protocolo de Integridade Probatória (PIP)",
+      "finalidade": "Auditar a integridade, legibilidade, presença e natureza de todas as provas admitidas pela regra DEC, assegurando que a base probatória seja materialmente confiável antes de qualquer valoração.",
+      "ação_literal": "Realize varredura completa nos documentos admitidos. Registre todas as ocorrências com base nos seguintes Alvos de Auditoria (TARGETS): Alvo (ilegivel_ou_corrompido), Alvo (silenciosa - anexos não descritos), Alvo (volatil - acesso externo), Alvo (ausente - mencionada mas não localizada), Alvo (oral_nao_transcrita).",
+      "parâmetros": {
+        "targets": [
+          "ilegivel_ou_corrompido",
+          "silenciosa",
+          "volatil",
+          "ausente",
+          "oral_nao_transcrita"
+        ]
+      },
+      "origem_legada": "MONK 22.1 (SEE:S4.M6.F2.1), PREZ 12.7.5 (SEE:S4.M1.F3.ETAPA 2)",
+      "status_migração": "Abstraída em MONK 23.1 (VAR.Matriz_Instructions.auditoria_pip)"
+    },
+    {
+      "id_canônico": "regra:PFC.v1",
+      "nome_amigável": "Protocolo de Fundamentação Condicional (PFC)",
+      "finalidade": "Formular o 'Fundamento da Sugestão' de forma auditável, priorizando diretrizes internas (BDir) sobre fontes externas (exógenas) e reportando lacunas.",
+      "ação_literal": "1. Valide se existe uma diretriz específica e aplicável no BDir. 2. SE POSITIVO (diretriz encontrada): A fundamentação DEVE seguir o formato: 'Fundamento via BDir [ID da Diretriz]: [Justificativa]'. 3. SE NEGATIVO (diretriz não encontrada): A fundamentação DEVE seguir o formato: '[ALERTA DE LACUNA NO BDir] Fundamento exógeno: [Fonte da decisão, ex: Súmula X]. Justificativa: [Justificativa]'.",
+      "parâmetros": {
+        "format_on_success": "Fundamento via BDir [{id}]: {justificativa}",
+        "format_on_fail": "[ALERTA DE LACUNA NO BDir] Fundamento exógeno: {fonte}. Justificativa: {justificativa}"
+      },
+      "origem_legada": "PREZ 12.7.5 (SEE:S4.M2.F4)"
+    },
+    {
+      "id_canônico": "regra:RVB.v1",
+      "nome_amigável": "Regra de Vinculação de Blocos (RVB)",
+      "finalidade": "Garantir que a ação sugerida pela lógica (M2) seja mapeada para o bloco de texto exato (BText) que a implementa, registando esta ligação.",
+      "ação_literal": "1. Identifique no BText... o ID do bloco de texto exato que implementa a decisão. 2. Liste este ID na seção 'Componentes BText Vinculados' do output. Esta vinculação é mandatória.",
+      "parâmetros": {},
+      "origem_legada": "PREZ 12.7.5 (SEE:S4.M2.F5), AMY 3.5.5.2 (DPE-13)"
+    },
+    {
+      "id_canônico": "regra:PFUIC_DenominatorConsistency.v1",
+      "nome_amigável": "Protocolo de Consistência de Denominador PFUIC",
+      "finalidade": "Garantir que o denominador N das âncoras internas [[AI_PAGE: X/N]] seja sempre igual ao N_MAX_PAGINAS do out_teto, bloqueando contaminação por metadados.",
+      "ação_literal": "Em qualquer módulo que utilize o formato interno [[AI_PAGE: X/N]], o denominador N DEVE ser lido exclusivamente de 'out_teto.n_max'. É vedado extrair N de metadados do corpo documental (source_id, chunk_id, doc_id, tags técnicas). Se qualquer âncora tiver N divergente, a saída DEVE ser bloqueada e reportada como 'ERRO DE CONSISTÊNCIA PFUIC: denominador inválido'.",
+      "parâmetros": {
+        "source_of_truth_nmax": "out_teto.n_max",
+        "internal_anchor_pattern": "\\[\\[AI_PAGE:\\s*(\\d+)/(\\d+)\\]\\]",
+        "forbidden_denominator_sources": [
+          "document_body_metadata",
+          "source_id",
+          "chunk_id",
+          "doc_id"
+        ],
+        "action_on_mismatch": "BLOCK_AND_REPORT"
+      },
+      "origem_legada": "Patch de Confiabilidade PFUIC 2026 (Incident MONK-PFUIC-DEN-001)"
+    },
+    {
+      "id_canônico": "regra:FSC.v1",
+      "nome_amigável": "Protocolo de Flexibilidade Semântica Controlada (FSC)",
+      "finalidade": "Evitar a solicitação de documentos duplicados, permitindo a resolução semântica de âncoras implícitas (ex: 'o laudo') para documentos já fornecidos (ex: 'Relatório de Estudo Social').",
+      "ação_literal": "Gatilho: Ao identificar uma 'âncora implícita' (ex: 'o laudo'). Execução: 1. Busca Literal: Tente encontrar uma correspondência literal/quase literal nos documentos fornecidos. 2. Busca Semântica (Se falha literal): Avalie se algum documento fornecido corresponde funcionalmente à âncora (ex: 'estudo financeiro' -> 'InfoJud'). Decisão: Se alta confiança, considere resolvido. Se confiança média/baixa, liste em 'PONTOS DE VERIFICAÇÃO DE VÍNCULO'. Se confiança nula, liste como 'Peça Faltante'. REGRA DE ESCOPO: O score do FSC serve apenas para vínculo documental semântico e não pode substituir ancoragem factual em fls. para afirmações de mérito.",
+      "parâmetros": {
+        "confidence_threshold_high": 0.85,
+        "confidence_threshold_medium": 0.6,
+        "score_scope": "semantic_link_resolution_only",
+        "forbidden_use": "factual_truth_assessment"
+      },
+      "origem_legada": "MILES v1.8 (DME)"
+    },
+    {
+      "id_canônico": "regra:PVP.v1",
+      "nome_amigável": "Protocolo de Validação de Vínculo Primário (PVP) - Anti-Derivação",
+      "finalidade": "Impedir que documentos declaratórios (petições, manifestações) sejam aceitos como fonte de prova material para fatos que exigem documento intrínseco (laudos, extratos, contratos), mesmo que citados por fé pública.",
+      "ação_literal": "REGRA DE TIPAGEM ESTRITA: Ao validar um fato (ex: Renda, Paternidade, Propriedade), verifique o 'Tipo_Peca' da fonte onde a informação foi lida. SE o fato exige prova intrínseca (ex: Renda exige IRPF/Extrato) E a fonte lida for declaratória (Petição, Contestação, Réplica, Parecer), ENTÃO: 1. É PROIBIDO classificar como 'PROVA_EM_CONTEXTO' ou 'RESPONDIDA'. 2. Classifique obrigatoriamente como 'LACUNA_DE_COBERTURA' (se indexado mas não lido) ou 'ALERTA_DE_FONTE_SECUNDARIA' (se lido). A citação do valor na petição não supre a ausência do documento original.",
+      "parâmetros": {
+        "compatibility_matrix": {
+          "fato_financeiro": [
+            "IRPF",
+            "Extrato",
+            "Holerite",
+            "Balanço"
+          ],
+          "fato_biologico": [
+            "Laudo_DNA"
+          ],
+          "fato_saude": [
+            "Laudo_Medico",
+            "Receituario",
+            "Prontuario"
+          ],
+          "fato_registral": [
+            "Certidao",
+            "Matricula",
+            "Contrato_Social"
+          ]
+        },
+        "forbidden_sources_for_material_facts": [
+          "Petição (Outras)",
+          "Petição Inicial",
+          "Contestação",
+          "Réplica",
+          "Manifestação do Ministério Público",
+          "Alegacoes Finais"
+        ],
+        "override_fe_publica": true
+      },
+      "origem_legada": "MINGUS v1.6 (adição manual)"
+    }
+  ],
+  "auditorias": [
+    {
+      "id_canônico": "auditoria:PAC.v1",
+      "nome_amigável": "Painel de Auditoria de Cobertura (PAC) / Protocolo Anti-Embargos",
+      "finalidade": "Garantir que todos os pedidos e subpedidos extraídos (do DNA_Caso) foram tratados na Fundamentação ou no Dispositivo (da SentencaDraft), identificando lacunas de cobertura.",
+      "ação_literal": "Gere a Matriz de Cobertura, confrontando os 'pedidos' e 'pontos controvertidos' (extraídos do M1) com os 'pontos de fundamentação' e 'dispositivo' (gerados no M4). Identifique lacunas de cobertura, emitindo Alertas de Cobertura sempre que um pedido não tenha sido tratado.",
+      "parâmetros": {
+        "source_pedidos": "schemas:DNA_Caso.v1:pontos_controvertidos",
+        "source_decisao": "schemas:SentencaDraft.v1_1:secoes[0]",
+        "source_fundamentacao": "schemas:SentencaDraft.v1_1:secoes[1]",
+        "source_dispositivo": "schemas:SentencaDraft.v1_1:secoes[2]",
+        "source_rfu": "schemas:SentencaDraft.v1_1:metadados:rfu"
+      },
+      "origem_legada": "MONK 22.1 (SEE:S4.M7.F5), MONK 23.1 (VAR.Auditoria_Instructions.auditoria_pac), MILES v1.8 (SEE:S9.F2)"
+    },
+    {
+      "id_canônico": "auditoria:PVT.v1",
+      "nome_amigável": "Protocolo de Validação de Titularidade (PVT)",
+      "finalidade": "Garantir a integridade fática das alegações de propriedade. Forçar a validação cruzada entre (1) a alegação de um bem, (2) a prova documental de titularidade e (3) outras declarações patrimoniais, independentemente de haver contestação da parte contrária.",
+      "ação_literal": "1. Gatilho: Ao analisar qualquer bem (ex: Imóvel, Veículo, Ativo, Participação Societária) arrolado para partilha por qualquer das partes.\n2. Mapeamento de Fontes Funcionais: Identifique e mapeie todas as fontes de informação relevantes nos autos em três categorias funcionais (independentemente do nome do documento):\n    * (a) Fonte de Alegação (Claim): Onde a parte alega a propriedade ou a existência do bem (ex: Petição Inicial, Contestação, Réplica).\n    * (b) Fonte de Titularidade (Title): O documento que, por sua natureza, *deveria provar* a titularidade formal do bem (ex: Matrícula de Imóvel, CRLV de Veículo, Contrato Social de empresa, Nota de Corretagem de ação).\n    * (c) Fonte de Declaração (Declaration): Qualquer outro documento onde a parte *deveria ter declarado* o bem, geralmente para fins fiscais ou patrimoniais (ex: Declaração de Imposto de Renda (DIRPF/PJ), Escritura de Pacto Antenupcial, balanços, extratos consolidados de investimento).\n3. Triangulação Mandatória: Você DEVE cruzar as informações de todas as fontes mapeadas (a, b, c).\n4. Geração de Alerta (Obrigatório): Você DEVE gerar um \"Alerta Crítico de Titularidade\" no relatório de auditoria (RAP) se:\n    * (Tipo 1: Contradição Direta) A Fonte de Titularidade (b) contradiz a Fonte de Alegação (a). (Ex: A Petição alega propriedade, mas a Matrícula indica um terceiro).\n    * (Tipo 2: Omissão Cruzada) A Fonte de Declaração (c) omite o bem alegado em (a) ou (b). (Ex: O bem consta na Petição, mas está ausente na DIRPF).\n    * (Tipo 3: Conflito Interno) Há conflito fático entre as próprias fontes (ex: Matrícula indica Propriedade X, DIRPF indica Propriedade Y para o mesmo bem).",
+      "parâmetros": {
+        "target_asset_types": [
+          "imovel",
+          "veiculo",
+          "ativo_financeiro",
+          "participacao_societaria"
+        ],
+        "source_of_truth_functions": [
+          "source_claim",
+          "source_title",
+          "source_declaration"
+        ],
+        "alert_types": [
+          "contradicao_direta",
+          "omissao_cruzada",
+          "conflito_interno"
+        ]
+      },
+      "origem_legada": "MONK 25m1.2 (Análise de Regressão PIP-01/Ubatuba)"
+    },
+    {
+      "id_canônico": "auditoria:RCE.v1",
+      "nome_amigável": "Relatório de Conformidade Estrutural (RCE) (Consolida RIA/PVC)",
+      "finalidade": "Garantir a coerência lógica interna da minuta, validando a ligação entre Relatório, Fundamentação, Dispositivo e a cadeia BText/BDir.",
+      "ação_literal": "[OBJETIVO] Auditar a coerência estrutural e lógica da Minuta ('SentencaDraft') gerada.\n[TAREFA 1 (RELATÓRIO vs. FUNDAMENTAÇÃO)] (Base PVC): Verifique se os fatos e teses principais (Pontos Controvertidos) listados no Relatório (Seção 1 da Minuta) são tratados e respondidos na Fundamentação (Seção 2 da Minuta).\n[TAREFA 2 (FUNDAMENTAÇÃO vs. DISPOSITIVO)] (Base PVC): Verifique se cada conclusão da Fundamentação (acolhimento ou rejeição de um pedido) tem um reflexo lógico direto e correspondente no Dispositivo (Seção 3 da Minuta).\n[TAREFA 3 (CONFORMIDADE DE BLOCOS)] (Base PVC): Verifique se os blocos de texto listados no metadado 'RFU' (Relatório de Fundamentação Utilizada, anexo ao artefato) correspondem à 'Cadeia BText Vinculada' que foi sugerida pelo Painel de Valoração (M3) e que deu origem à minuta.\n[RESULTADO] Retorne um .status=TRUE se todas as 3 validações passarem. Se .status=FALSE, liste as incoerências no log de erros (payload .erros).",
+      "parâmetros": {
+        "source_relatorio": "schemas:SentencaDraft.v1_1:secoes[0]",
+        "source_fundamentacao": "schemas:SentencaDraft.v1_1:secoes[1]",
+        "source_dispositivo": "schemas:SentencaDraft.v1_1:secoes[2]",
+        "source_rfu": "schemas:SentencaDraft.v1_1:metadados:rfu"
+      },
+      "origem_legada": "MONK 22.1 (SEE:S4.M7.F1.5 - RIA), MONK 22.1 (SEE:S4.M7.F4 - PVC)"
+    },
+    {
+      "id_canônico": "auditoria:SanitizacaoAncorada.v1",
+      "nome_amigável": "Auditoria de Sanitização Ancorada (Linter PFUIC)",
+      "finalidade": "Limpar o relatório final removendo qualquer afirmação fática que não tenha sobrevivido à verificação de ancoragem.",
+      "ação_literal": "FILTRO DE SAÍDA: Varra o objeto JSON gerado. Para cada afirmação ou fato listado: 1. Verifique se possui uma âncora '(fls. X)' adjacente. 2. Se NÃO possuir, a afirmação inteira DEVE SER DELETADA do objeto final. Um fato sem endereço no processo é considerado ruído/alucinação e não deve ser apresentado ao usuário.",
+      "parâmetros": {
+        "action_on_fail": "DELETE_NODE"
+      },
+      "origem_legada": "BIRD v6.3 Clean (Refactoring de Engenharia)"
+    }
+  ]
+}
+

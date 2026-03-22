@@ -1,0 +1,747 @@
+{
+  "metadados_arquivo": {
+    "id_arquivo": "btext:decision:v1",
+    "nome_amigavel": "BText DECISION - Blocos de Sentenca (Familia)",
+    "versao_conteudo": "v1.0",
+    "data_migracao": "2026-02-17",
+    "descricao": "Biblioteca textual unificada para sentencas da camada decisoria compartilhada."
+  },
+  "blocos": [
+    {
+      "id_canonico": "BLOCO_RELATORIO_PADRAO_INICIAIS_CONTESTACAO",
+      "secao_origem": "4.1. Blocos de Relatório",
+      "tags": [
+        "relatorio",
+        "padrao",
+        "inicial",
+        "contestacao"
+      ],
+      "variaveis_requeridas": [
+        "NOME DA AÇÃO",
+        "PARTE AUTORA",
+        "PARTE RÉ",
+        "SÍNTESE DA INICIAL",
+        "PEDIDO PRINCIPAL",
+        "fls. XX",
+        "SÍNTESE DA CONTESTAÇÃO"
+      ],
+      "conteudo": [
+        "Trata-se de Ação de [NOME DA AÇÃO] ajuizada por [PARTE AUTORA] em face de [PARTE RÉ].",
+        "Alega a parte autora, em síntese, que [SÍNTESE DA INICIAL]. Requer, ao final, a procedência do pedido para [PEDIDO PRINCIPAL].",
+        "Com a inicial, vieram os documentos de fls. [fls. XX]. Regularmente citada, a parte ré apresentou contestação às fls. [fls. XX], sustentando, em resumo, que [SÍNTESE DA CONTESTAÇÃO]. Pugnou pela improcedência. Houve réplica (fls. [fls. XX]).",
+        "Instadas a especificar provas, as partes se manifestaram às fls. [fls. XX].",
+        "O Ministério Público opinou pela [PROCEDÊNCIA/IMPROCEDÊNCIA] do pedido (fls. [fls. XX]). É o relatório. Decido."
+      ]
+    },
+    {
+      "id_canonico": "BLOCO_FUNDAMENTO_ALIMENTOS_TRINOMIO",
+      "secao_origem": "4.2. Blocos de Fundamentação",
+      "tags": [
+        "alimentos",
+        "fundamentacao",
+        "trinomio",
+        "cc_1694"
+      ],
+      "conteudo": [
+        "A obrigação de prestar alimentos baseia-se no dever de sustento decorrente do poder familiar e do parentesco, encontrando amparo nos artigos 1.694 e seguintes do Código Civil.",
+        "Sua fixação deve observar o trinômio necessidade-possibilidade-proporcionalidade, buscando-se o equilíbrio entre as necessidades de quem pleiteia e os recursos de quem deve prover."
+      ]
+    },
+    {
+      "id_canonico": "BLOCO_FUNDAMENTO_SINAIS_RIQUEZA",
+      "secao_origem": "4.2. Blocos de Fundamentação",
+      "tags": [
+        "alimentos",
+        "capacidade",
+        "sinais_riqueza",
+        "teoria_aparencia"
+      ],
+      "variaveis_requeridas": [
+        "fls. XX/YY",
+        "fls. ZZ"
+      ],
+      "conteudo": [
+        "No que tange à capacidade financeira do réu, verifico que os documentos que comprovam seus rendimentos formais não condizem com o padrão de vida por ele ostentado, conforme se extrai das fotografias de fls. [fls. XX/YY] e dos extratos de cartão de crédito de fls. [fls. ZZ].",
+        "Aplicando-se a teoria dos sinais exteriores de riqueza, consolidada na jurisprudência pátria, tenho por razoável estimar sua renda mensal em patamar superior ao declarado, o que justifica a fixação dos alimentos no valor pleiteado."
+      ]
+    },
+    {
+      "id_canonico": "BLOCO_FUNDAMENTO_OBRIGACAO_AVOENGA_PROCEDENTE",
+      "secao_origem": "4.2. Blocos de Fundamentação",
+      "tags": [
+        "alimentos",
+        "avoenga",
+        "subsidiaria",
+        "avos"
+      ],
+      "variaveis_requeridas": [
+        "citar prova (laudo/reclusão)"
+      ],
+      "conteudo": [
+        "Comprovada a impossibilidade do genitor em prover integralmente o sustento do filho, conforme [citar prova, ex: laudo de invalidez, certidão de reclusão], e demonstrada a capacidade financeira dos avós paternos/maternos, impõe-se o reconhecimento da responsabilidade subsidiária e complementar destes, nos termos do art. 1.698 do Código Civil.",
+        "A obrigação avoenga, neste caso, não é uma transferência de responsabilidade, mas uma garantia ao direito fundamental do alimentando."
+      ]
+    },
+    {
+      "id_canonico": "BLOCO_FUNDAMENTO_MAIOR_ESTUDANTE_PROCEDENTE",
+      "secao_origem": "4.2. Blocos de Fundamentação",
+      "tags": [
+        "alimentos",
+        "maioridade",
+        "estudante",
+        "sumula_358"
+      ],
+      "variaveis_requeridas": [
+        "fls. XX"
+      ],
+      "conteudo": [
+        "Embora o(a) alimentando(a) tenha atingido a maioridade civil, a obrigação alimentar do genitor persiste.",
+        "Isso porque restou devidamente comprovado, pelos documentos de fls. [fls. XX], que o(a) jovem encontra-se matriculado(a) e frequentando curso superior/técnico, o que presume a continuidade de sua necessidade de auxílio para custear sua formação profissional e garantir sua digna subsistência, conforme entendimento sumulado pelo Superior Tribunal de Justiça (Súmula 358)."
+      ]
+    },
+    {
+      "id_canonico": "BLOCO_FIXACAO_DESEMPREGO",
+      "secao_origem": "4.2. Blocos de Fundamentação",
+      "tags": [
+        "alimentos",
+        "fixacao",
+        "desemprego",
+        "salario_minimo"
+      ],
+      "variaveis_requeridas": [
+        "fls. XX",
+        "PERCENTUAL",
+        "VALOR_EXTENSO"
+      ],
+      "conteudo": [
+        "Em razão da alteração da situação financeira do alimentante, que comprovou a perda de seu vínculo empregatício formal (fls. [fls. XX]), mas mantém o dever de assistir sua prole, readequa-se a obrigação alimentar.",
+        "Assim, fixo os alimentos provisórios/definitivos em [PERCENTUAL]% ([VALOR_EXTENSO]) do salário mínimo nacional, valor que se mostra equilibrado para atender às necessidades básicas do alimentando sem onerar excessivamente o devedor neste momento."
+      ]
+    },
+    {
+      "id_canonico": "BLOCO_FUNDAMENTO_GUARDA_COMPARTILHADA_REGRA",
+      "secao_origem": "4.2. Blocos de Fundamentação",
+      "tags": [
+        "guarda",
+        "compartilhada",
+        "regra_geral",
+        "cc_1584"
+      ],
+      "conteudo": [
+        "A guarda compartilhada, conforme o art. 1.584, § 2º, do Código Civil, com a redação dada pela Lei nº 13.058/2014, tornou-se a regra no ordenamento jurídico brasileiro, mesmo quando inexistente o consenso entre os genitores.",
+        "Tal modelo visa garantir que ambos os pais participem de forma equilibrada da vida dos filhos, dividindo responsabilidades e decisões importantes, sempre em observância ao princípio do melhor interesse da criança.",
+        "No caso dos autos, ambos os genitores mostram-se aptos a exercer o poder familiar, não havendo óbice para a sua implementação."
+      ]
+    },
+    {
+      "id_canonico": "BLOCO_FUNDAMENTO_GUARDA_UNILATERAL_EXCECAO",
+      "secao_origem": "4.2. Blocos de Fundamentação",
+      "tags": [
+        "guarda",
+        "unilateral",
+        "excecao",
+        "risco"
+      ],
+      "variaveis_requeridas": [
+        "PROVA TÉCNICA DECISIVA",
+        "fls. XX",
+        "DESCREVER O FATO GRAVE",
+        "NOME DO GENITOR GUARDIÃO"
+      ],
+      "conteudo": [
+        "Embora a guarda compartilhada seja a regra, o caso em tela apresenta situação excepcional que justifica a sua não aplicação.",
+        "Restou comprovado, notadamente por meio de [PROVA TÉCNICA DECISIVA, EX: laudo psicossocial, relatório do conselho tutelar] de fls. [fls. XX], que [DESCREVER O FATO GRAVE, EX: a conduta desabonadora do(a) genitor(a) X; a manifesta falta de interesse do(a) genitor(a) Y; a situação de risco a que o menor estava exposto], tornando a fixação da guarda unilateral em favor de [NOME DO GENITOR GUARDIÃO] a medida que melhor atende ao princípio do melhor interesse da criança, nos termos do art. 1.583, § 2º, do CC."
+      ]
+    },
+    {
+      "id_canonico": "BLOCO_FUNDAMENTO_ALIENACAO_PARENTAL_CONFIGURADA",
+      "secao_origem": "4.2. Blocos de Fundamentação",
+      "tags": [
+        "alienacao_parental",
+        "lei_12318",
+        "configuracao"
+      ],
+      "variaveis_requeridas": [
+        "fls. XX",
+        "fls. YY",
+        "GENITOR ALIENADOR",
+        "DESCREVER A CONDUTA"
+      ],
+      "conteudo": [
+        "A análise do conjunto probatório, em especial o laudo psicossocial de fls. [fls. XX] e as mensagens de fls. [fls. YY], revela a prática de atos de alienação parental por parte do(a) [GENITOR ALIENADOR], que, de forma deliberada, [DESCREVER A CONDUTA, EX: desqualifica a imagem do outro genitor perante o filho; dificulta o exercício do direito de convivência].",
+        "Tais atos, previstos no art. 2º da Lei nº 12.318/2010, prejudicam a formação psicológica da criança e o seu direito a uma convivência familiar saudável, impondo a intervenção do Judiciário."
+      ]
+    },
+    {
+      "id_canonico": "BLOCO_FUNDAMENTO_PARTILHA_COMUNHAO_PARCIAL",
+      "secao_origem": "4.2. Blocos de Fundamentação",
+      "tags": [
+        "partilha",
+        "regime_bens",
+        "comunhao_parcial"
+      ],
+      "conteudo": [
+        "O regime de bens aplicável ao casamento das partes é o da comunhão parcial, no qual se comunicam os bens adquiridos na constância do casamento por título oneroso, ainda que só em nome de um dos cônjuges, nos termos do art. 1.658 do Código Civil.",
+        "Excluem-se da comunhão os bens adquiridos com valores exclusivamente pertencentes a um dos cônjuges em sub-rogação dos bens particulares, ou os recebidos por doação ou sucessão (art. 1.659, CC)."
+      ]
+    },
+    {
+      "id_canonico": "BLOCO_FUNDAMENTO_ALIMENTOS_EX_CONJUGE_IMPROCEDENTE",
+      "secao_origem": "4.2. Blocos de Fundamentação",
+      "tags": [
+        "alimentos",
+        "ex_conjuge",
+        "improcedencia",
+        "capacidade_laboral"
+      ],
+      "conteudo": [
+        "Quanto ao pedido de alimentos formulado pela ex-cônjuge, entendo que não assiste razão à autora.",
+        "A obrigação alimentar entre ex-cônjuges é medida excepcional, justificada apenas quando demonstrada a efetiva necessidade e a incapacidade de prover o próprio sustento.",
+        "No caso, a autora é pessoa jovem, com formação profissional e em plenas condições de se reinserir no mercado de trabalho, não se justificando a manutenção do vínculo de dependência financeira com o ex-cônjuge."
+      ]
+    },
+    {
+      "id_canonico": "BLOCO_FUNDAMENTO_PARTILHA_FINANCIAMENTO",
+      "secao_origem": "4.2. Blocos de Fundamentação",
+      "tags": [
+        "partilha",
+        "imovel_financiado",
+        "parcelas_pagas"
+      ],
+      "variaveis_requeridas": [
+        "data do casamento",
+        "data da separação de fato"
+      ],
+      "conteudo": [
+        "No que tange ao imóvel financiado, a partilha deve recair unicamente sobre os valores correspondentes às parcelas adimplidas durante a sociedade conjugal, devidamente corrigidos.",
+        "Assim, deverá ser apurado em liquidação de sentença o montante pago entre [data do casamento] e [data da separação de fato], cabendo a cada parte 50% (cinquenta por cento) deste valor."
+      ]
+    },
+    {
+      "id_canonico": "BLOCO_FUNDAMENTO_UNIAO_ESTAVEL_RECONHECIDA",
+      "secao_origem": "4.2. Blocos de Fundamentação",
+      "tags": [
+        "uniao_estavel",
+        "reconhecimento",
+        "procedencia"
+      ],
+      "variaveis_requeridas": [
+        "citar provas principais",
+        "data de início",
+        "data do fim"
+      ],
+      "conteudo": [
+        "Para a configuração da união estável, exige o art. 1.723 do Código Civil a comprovação de convivência pública, contínua e duradoura, estabelecida com o objetivo de constituição de família.",
+        "No caso dos autos, o conjunto probatório, incluindo [citar provas principais, ex: depoimentos testemunhais, fotografias, comprovantes de endereço comum], demonstra de forma inequívoca que as partes compartilharam a vida e as responsabilidades com o claro intuito de constituir uma família, ultrapassando a esfera de um simples namoro.",
+        "Assim, reconheço a existência da união estável no período compreendido entre [data de início] e [data do fim]."
+      ]
+    },
+    {
+      "id_canonico": "BLOCO_FUNDAMENTO_UNIAO_ESTAVEL_NAO_RECONHECIDA",
+      "secao_origem": "4.2. Blocos de Fundamentação",
+      "tags": [
+        "uniao_estavel",
+        "namoro_qualificado",
+        "improcedencia"
+      ],
+      "variaveis_requeridas": [
+        "citar exemplos"
+      ],
+      "conteudo": [
+        "Embora as partes tenham mantido um relacionamento afetivo, as provas dos autos não são suficientes para caracterizar a união estável.",
+        "Os elementos apresentados, tais como [citar exemplos, ex: viagens e eventos sociais], configuram o que a jurisprudência denomina \"namoro qualificado\", mas não demonstram o requisito subjetivo indispensável, qual seja, o ânimo de constituir família, com comunhão de vidas e mútua assistência.",
+        "Ausente a prova da affectio maritalis, o pedido de reconhecimento da união estável é improcedente."
+      ]
+    },
+    {
+      "id_canonico": "BLOCO_FUNDAMENTO_IMPROCEDENCIA_NEGATORIA_SOCIOAFETIVIDADE",
+      "secao_origem": "4.2. Blocos de Fundamentação",
+      "tags": [
+        "paternidade",
+        "negatoria",
+        "socioafetividade",
+        "dna_negativo"
+      ],
+      "variaveis_requeridas": [
+        "fls. XX (DNA)",
+        "citar provas (testemunhal/fotos)"
+      ],
+      "conteudo": [
+        "Embora o exame de DNA de fls. [fls. XX] tenha atestado a inexistência de vínculo biológico entre as partes, o pedido de anulação do registro civil não merece prosperar.",
+        "O conjunto probatório, em especial [citar provas, ex: depoimentos testemunhais, fotografias], demonstra a formação de um sólido e duradouro vínculo socioafetivo, caracterizado pela posse do estado de filho.",
+        "O autor, ao longo de anos, dispensou ao réu tratamento de filho, sendo por ele reconhecido como pai.",
+        "Conforme tese fixada pelo STJ, a paternidade socioafetiva prevalece sobre a biológica, tornando o reconhecimento um ato irrevogável. Improcede, portanto, a pretensão negatória."
+      ]
+    },
+    {
+      "id_canonico": "BLOCO_FUNDAMENTO_PROCEDENCIA_INVESTIGATORIA_RECUSA",
+      "secao_origem": "4.2. Blocos de Fundamentação",
+      "tags": [
+        "investigacao_paternidade",
+        "recusa_dna",
+        "sumula_301",
+        "presuncao"
+      ],
+      "variaveis_requeridas": [
+        "citar indícios (mensagens/fotos)"
+      ],
+      "conteudo": [
+        "Devidamente citado, o réu, embora intimado por diversas vezes, recusou-se de forma injustificada a se submeter ao exame pericial de DNA.",
+        "Tal conduta, nos termos da Súmula 301 do Superior Tribunal de Justiça, gera a presunção de paternidade, a qual, no presente caso, vem corroborada por outros elementos de prova, como [citar indícios, ex: mensagens trocadas, fotografias da época da concepção].",
+        "Assim, impõe-se o reconhecimento do vínculo de filiação."
+      ]
+    },
+    {
+      "id_canonico": "BLOCO_FUNDAMENTO_INTERDICAO_PROCEDENTE",
+      "secao_origem": "4.2. Blocos de Fundamentação",
+      "tags": [
+        "interdicao",
+        "curatela",
+        "procedencia",
+        "incapacidade"
+      ],
+      "variaveis_requeridas": [
+        "fls. XX (Laudo)",
+        "NOME DA CONDIÇÃO/CID",
+        "fls. YY (Entrevista)"
+      ],
+      "conteudo": [
+        "O conjunto probatório, notadamente o laudo pericial de fls. [fls. XX], demonstra de forma inequívoca que o(a) interditando(a) é portador(a) de [NOME DA CONDIÇÃO/CID], o que o(a) torna incapaz de, transitoriamente ou permanentemente, exprimir sua vontade e reger os atos de natureza patrimonial e negocial.",
+        "A entrevista realizada com o(a) interditando(a) (fls. [fls. YY]) corrobora as conclusões da perícia.",
+        "Desta forma, a decretação de sua curatela é medida que se impõe para a sua proteção."
+      ]
+    },
+    {
+      "id_canonico": "BLOCO_FUNDAMENTO_HOMOLOGACAO_CONSENSO_DEVER_ESTADO",
+      "secao_origem": "4.2. Blocos de Fundamentação",
+      "tags": [
+        "homologacao",
+        "acordo",
+        "consenso"
+      ],
+      "conteudo": [
+        "Considerando que o incentivo à solução consensual dos conflitos é dever imposto ao Estado (art. 3º, § 2º, do CPC), é de rigor a homologação do acordo entabulado pelas partes."
+      ]
+    },
+    {
+      "id_canonico": "BLOCO_DISPOSITIVO_ALIMENTOS_DUAL_SEM_PISO",
+      "secao_origem": "4.3. Blocos de Dispositivo",
+      "tags": [
+        "dispositivo",
+        "alimentos",
+        "fixacao",
+        "sem_piso"
+      ],
+      "variaveis_requeridas": [
+        "NOME DO RÉU",
+        "NOME DO AUTOR",
+        "DIA",
+        "PERCENTUAL",
+        "PERCENTUAL_EXTENSO",
+        "PERCENTUAL_DESEMPREGO",
+        "PERCENTUAL_DESEMPREGO_EXTENSO"
+      ],
+      "conteudo": [
+        "Ante o exposto, JULGO PROCEDENTE o pedido para condenar o réu [NOME DO RÉU] a pagar mensalmente ao(à) autor(a) [NOME DO AUTOR], a título de pensão alimentícia:",
+        "1) na hipótese de existência de vínculo empregatício, o valor correspondente a [PERCENTUAL]% ([PERCENTUAL_EXTENSO]) dos rendimentos líquidos, mediante desconto em folha;",
+        "Consideram-se rendimentos líquidos os ganhos brutos, incluindo 13º salário e o terço constitucional de férias, após a dedução exclusiva dos descontos legais obrigatórios (Imposto de Renda e Contribuição Previdenciária). A base de cálculo não inclui verbas de natureza indenizatória, tais como Fundo de Garantia por Tempo de Serviço (FGTS) e sua multa, aviso prévio indenizado, férias indenizadas, Participação nos Lucros e Resultados (PLR), vale-transporte e vale-alimentação. Quanto às verbas rescisórias, a pensão incidirá apenas sobre as de natureza salarial (saldo de salário, 13º proporcional e férias proporcionais acrescidas do terço constitucional).",
+        "2) para a hipótese de inexistência de vínculo empregatício, o valor correspondente a [PERCENTUAL_DESEMPREGO]% ([PERCENTUAL_DESEMPREGO_EXTENSO]) do salário-mínimo vigente à época do pagamento.",
+        "O pagamento deverá ser realizado até o dia [DIA] de cada mês, mediante desconto em folha e, na ausência de fonte pagadora, por depósito em conta bancária de titularidade do(a) representante legal do(a) alimentando(a), a ser informada nos autos."
+      ]
+    },
+    {
+      "id_canonico": "BLOCO_DISPOSITIVO_ALIMENTOS_DUAL_COM_PISO",
+      "secao_origem": "4.3. Blocos de Dispositivo",
+      "tags": [
+        "dispositivo",
+        "alimentos",
+        "fixacao",
+        "com_piso"
+      ],
+      "variaveis_requeridas": [
+        "NOME DO RÉU",
+        "NOME DO AUTOR",
+        "DIA",
+        "PERCENTUAL",
+        "PERCENTUAL_EXTENSO",
+        "PERCENTUAL_PISO",
+        "PERCENTUAL_PISO_EXTENSO",
+        "PERCENTUAL_DESEMPREGO",
+        "PERCENTUAL_DESEMPREGO_EXTENSO"
+      ],
+      "conteudo": [
+        "Ante o exposto, JULGO PROCEDENTE o pedido para condenar o réu [NOME DO RÉU] a pagar mensalmente ao(à) autor(a) [NOME DO AUTOR], a título de pensão alimentícia:",
+        "1) na hipótese de existência de vínculo empregatício, o valor correspondente a [PERCENTUAL]% ([PERCENTUAL_EXTENSO]) dos rendimentos líquidos, mediante desconto em folha, observado o piso mínimo de [PERCENTUAL_PISO]% ([PERCENTUAL_PISO_EXTENSO]) do salário-mínimo vigente à época do pagamento, quando o cálculo percentual resultar em valor inferior;",
+        "Consideram-se rendimentos líquidos os ganhos brutos, incluindo 13º salário e o terço constitucional de férias, após a dedução exclusiva dos descontos legais obrigatórios (Imposto de Renda e Contribuição Previdenciária). A base de cálculo não inclui verbas de natureza indenizatória, tais como Fundo de Garantia por Tempo de Serviço (FGTS) e sua multa, aviso prévio indenizado, férias indenizadas, Participação nos Lucros e Resultados (PLR), vale-transporte e vale-alimentação. Quanto às verbas rescisórias, a pensão incidirá apenas sobre as de natureza salarial (saldo de salário, 13º proporcional e férias proporcionais acrescidas do terço constitucional).",
+        "2) para a hipótese de inexistência de vínculo empregatício, o valor correspondente a [PERCENTUAL_DESEMPREGO]% ([PERCENTUAL_DESEMPREGO_EXTENSO]) do salário-mínimo vigente à época do pagamento.",
+        "O pagamento deverá ser realizado até o dia [DIA] de cada mês, mediante desconto em folha e, na ausência de fonte pagadora, por depósito em conta bancária de titularidade do(a) representante legal do(a) alimentando(a), a ser informada nos autos."
+      ]
+    },
+    {
+      "id_canonico": "BLOCO_DISPOSITIVO_ALIMENTOS_BASE_CALCULO_AMPLA",
+      "secao_origem": "4.3. Blocos de Dispositivo",
+      "tags": [
+        "dispositivo",
+        "alimentos",
+        "base_calculo",
+        "13_ferias"
+      ],
+      "variaveis_requeridas": [
+        "NOME DO RÉU",
+        "NOME DO AUTOR",
+        "PERCENTUAL"
+      ],
+      "conteudo": [
+        "(...) para condenar o réu [NOME DO RÉU] a pagar ao autor [NOME DO AUTOR] pensão alimentícia no valor mensal correspondente a [PERCENTUAL], incidente sobre seus rendimentos líquidos.",
+        "Consideram-se rendimentos líquidos os ganhos brutos, incluindo 13º salário e o terço constitucional de férias, após a dedução exclusiva dos descontos legais obrigatórios (Imposto de Renda e Contribuição Previdenciária). A base de cálculo não inclui verbas de natureza indenizatória, tais como Fundo de Garantia por Tempo de Serviço (FGTS) e sua multa, aviso prévio indenizado, férias indenizadas, Participação nos Lucros e Resultados (PLR), vale-transporte e vale-alimentação. Quanto às verbas rescisórias, a pensão incidirá apenas sobre as de natureza salarial (saldo de salário, 13º proporcional e férias proporcionais acrescidas do terço constitucional)."
+      ]
+    },
+    {
+      "id_canonico": "BLOCO_DISPOSITIVO_DIVORCIO_DECRETACAO",
+      "secao_origem": "4.3. Blocos de Dispositivo",
+      "tags": [
+        "dispositivo",
+        "divorcio",
+        "decretacao"
+      ],
+      "variaveis_requeridas": [
+        "NOME DO CASAL"
+      ],
+      "conteudo": [
+        "Ante o exposto, JULGO PROCEDENTE o pedido para decretar o divórcio de [NOME DO CASAL], com fundamento no art. 226, § 6º, da Constituição Federal, dissolvendo o vínculo matrimonial."
+      ]
+    },
+    {
+      "id_canonico": "BLOCO_DISPOSITIVO_GUARDA_COMPARTILHADA",
+      "secao_origem": "4.3. Blocos de Dispositivo",
+      "tags": [
+        "dispositivo",
+        "guarda",
+        "compartilhada",
+        "residencia_fixa"
+      ],
+      "variaveis_requeridas": [
+        "NOME DO MENOR",
+        "NOME DO GENITOR 1",
+        "NOME DO GENITOR 2",
+        "MATERNO/PATERNO",
+        "DESCREVER O REGIME"
+      ],
+      "conteudo": [
+        "(...) JULGO PROCEDENTE o pedido para estabelecer a GUARDA COMPARTILHADA do(a) menor [NOME DO MENOR] entre os genitores [NOME DO GENITOR 1] e [NOME DO GENITOR 2].",
+        "Fixo a residência de referência do(a) menor no lar [MATERNO/PATERNO].",
+        "O regime de convivência será exercido de forma [LIVRE, MEDIANTE ACORDO / ou DESCREVER O REGIME DETALHADO]."
+      ]
+    },
+    {
+      "id_canonico": "BLOCO_DISPOSITIVO_GUARDA_UNILATERAL_CONVIVENCIA",
+      "secao_origem": "4.3. Blocos de Dispositivo",
+      "tags": [
+        "dispositivo",
+        "guarda",
+        "unilateral",
+        "convivencia"
+      ],
+      "variaveis_requeridas": [
+        "NOME DO MENOR",
+        "NOME DO GUARDIÃO",
+        "NOME DO GENITOR NÃO GUARDIÃO",
+        "DESCREVER O REGIME DETALHADO"
+      ],
+      "conteudo": [
+        "(...) JULGO PROCEDENTE o pedido para conceder a GUARDA UNILATERAL do(a) menor [NOME DO MENOR] ao(à) genitor(a) [NOME DO GUARDIÃO].",
+        "Fixo o direito de convivência do(a) genitor(a) não guardião(ã), [NOME DO GENITOR NÃO GUARDIÃO], da seguinte forma: [DESCREVER O REGIME DETALHADO DE CONVIVÊNCIA]."
+      ]
+    },
+    {
+      "id_canonico": "BLOCO_DISPOSITIVO_ALIENACAO_PARENTAL_ADVERTENCIA",
+      "secao_origem": "4.3. Blocos de Dispositivo",
+      "tags": [
+        "dispositivo",
+        "alienacao_parental",
+        "advertencia"
+      ],
+      "variaveis_requeridas": [
+        "NOME DO ALIENADOR",
+        "AGRAVAMENTO DAS MEDIDAS"
+      ],
+      "conteudo": [
+        "(...) declaro a ocorrência de alienação parental praticada por [NOME DO ALIENADOR] e, com fundamento no art. 6º, I, da Lei nº 12.318/2010, determino a advertência do(a) genitor(a), para que se abstenha de repetir tais condutas, sob pena de [AGRAVAMENTO DAS MEDIDAS, EX: ampliação do regime de convivência em favor do genitor alienado; fixação de multa]."
+      ]
+    },
+    {
+      "id_canonico": "BLOCO_DISPOSITIVO_PARTILHA_BENS",
+      "secao_origem": "4.3. Blocos de Dispositivo",
+      "tags": [
+        "dispositivo",
+        "partilha",
+        "bens",
+        "dividas"
+      ],
+      "variaveis_requeridas": [
+        "LISTA DE BENS E VALORES",
+        "LISTA DE DÍVIDAS E VALORES"
+      ],
+      "conteudo": [
+        "(...) determino a PARTILHA dos bens comuns do casal, na proporção de 50% (cinquenta por cento) para cada um, da seguinte forma: [LISTA DE BENS E VALORES, Ex: 1) O imóvel matriculado sob o nº XXX; 2) O veículo modelo XXX].",
+        "As dívidas comuns, no montante de [LISTA DE DÍVIDAS E VALORES], deverão ser igualmente partilhadas."
+      ]
+    },
+    {
+      "id_canonico": "BLOCO_DISPOSITIVO_ALIMENTOS_EX_CONJUGE_TRANSITORIOS",
+      "secao_origem": "4.3. Blocos de Dispositivo",
+      "tags": [
+        "dispositivo",
+        "alimentos",
+        "ex_conjuge",
+        "transitorios"
+      ],
+      "variaveis_requeridas": [
+        "PERCENTUAL/VALOR",
+        "PRAZO EM MESES"
+      ],
+      "conteudo": [
+        "(...) condeno o réu a pagar à autora, a título de alimentos transitórios, o valor mensal correspondente a [PERCENTUAL/VALOR, Ex: XX% de seus rendimentos líquidos], pelo prazo determinado de [PRAZO EM MESES] meses, contados da data desta sentença, período que se afigura razoável para que a alimentanda possa se reorganizar financeiramente."
+      ]
+    },
+    {
+      "id_canonico": "BLOCO_DISPOSITIVO_RECONHECIMENTO_DISSOLUCAO",
+      "secao_origem": "4.3. Blocos de Dispositivo",
+      "tags": [
+        "dispositivo",
+        "uniao_estavel",
+        "dissolucao",
+        "partilha"
+      ],
+      "variaveis_requeridas": [
+        "NOME DO AUTOR",
+        "NOME DO RÉU",
+        "data de início",
+        "data do fim"
+      ],
+      "conteudo": [
+        "Ante o exposto, JULGO PROCEDENTE o pedido para:",
+        "1) RECONHECER a existência de união estável entre [NOME DO AUTOR] e [NOME DO RÉU] no período de [data de início] a [data do fim];",
+        "2) DECRETAR a dissolução da referida união estável. Consequentemente, determino a partilha dos bens adquiridos onerosamente durante o período da união, na proporção de 50% para cada companheiro, a ser apurada em liquidação de sentença."
+      ]
+    },
+    {
+      "id_canonico": "BLOCO_DISPOSITIVO_PROCEDENCIA_INVESTIGATORIA",
+      "secao_origem": "4.3. Blocos de Dispositivo",
+      "tags": [
+        "dispositivo",
+        "investigacao_paternidade",
+        "procedente",
+        "averbacao"
+      ],
+      "variaveis_requeridas": [
+        "NOME DO RÉU",
+        "NOME DO AUTOR"
+      ],
+      "conteudo": [
+        "Ante o exposto, JULGO PROCEDENTE o pedido para DECLARAR que [NOME DO RÉU] é pai de [NOME DO AUTOR], devendo ser expedido o competente mandado de averbação ao Cartório de Registro Civil para que se proceda à inclusão do patronímico paterno e dos avós paternos no assento de nascimento do autor."
+      ]
+    },
+    {
+      "id_canonico": "BLOCO_DISPOSITIVO_IMPROCEDENCIA_NEGATORIA",
+      "secao_origem": "4.3. Blocos de Dispositivo",
+      "tags": [
+        "dispositivo",
+        "negatoria",
+        "improcedente",
+        "socioafetividade"
+      ],
+      "variaveis_requeridas": [
+        "NOME DO FILHO"
+      ],
+      "conteudo": [
+        "Ante o exposto, e em que pese o resultado negativo do exame de DNA, JULGO IMPROCEDENTE o pedido formulado na Ação Negatória de Paternidade, com fundamento na prevalência do vínculo socioafetivo, mantendo-se incólume o registro de nascimento de [NOME DO FILHO]."
+      ]
+    },
+    {
+      "id_canonico": "BLOCO_DISPOSITIVO_DECRETACAO_INTERDICAO",
+      "secao_origem": "4.3. Blocos de Dispositivo",
+      "tags": [
+        "dispositivo",
+        "interdicao",
+        "curatela",
+        "nomeacao"
+      ],
+      "variaveis_requeridas": [
+        "NOME DO INTERDITANDO",
+        "NOME DO CURADOR",
+        "ESPECIFICAR OS ATOS"
+      ],
+      "conteudo": [
+        "Ante o exposto, JULGO PROCEDENTE o pedido para DECRETAR a curatela de [NOME DO INTERDITANDO], declarando-o(a) relativamente incapaz de exercer, pessoalmente, os atos de natureza patrimonial e negocial.",
+        "NOMEIO como seu(sua) curador(a) o(a) Sr(a). [NOME DO CURADOR], que deverá prestar o compromisso legal.",
+        "Esta curatela abrange os seguintes atos: [ESPECIFICAR OS ATOS, EX: administrar bens e rendas, movimentar contas bancárias, assinar contratos].",
+        "Expeça-se o mandado de inscrição no Registro de Pessoas Naturais e publique-se o edital na forma da lei."
+      ]
+    },
+    {
+      "id_canonico": "BLOCO_DISPOSITIVO_CURADOR_ADVERTENCIA",
+      "secao_origem": "4.3. Blocos de Dispositivo",
+      "tags": [
+        "dispositivo",
+        "curatela",
+        "advertencia",
+        "prestacao_contas"
+      ],
+      "conteudo": [
+        "Fica o(a) curador(a) advertido(a) de que deverá prestar contas de sua administração anualmente (ou conforme determinação do juízo), bem como de que necessitará de autorização judicial para alienar ou onerar bens do(a) curatelado(a)."
+      ]
+    },
+    {
+      "id_canonico": "BLOCO_DISPOSITIVO_HOMOLOGA_DECRETA_DIVORCIO_CONSENSUAL",
+      "secao_origem": "4.3. Blocos de Dispositivo",
+      "tags": [
+        "dispositivo",
+        "homologacao",
+        "divorcio",
+        "consensual"
+      ],
+      "variaveis_requeridas": [
+        "fls. XX (acordo)"
+      ],
+      "conteudo": [
+        "Ante o exposto, HOMOLOGO POR SENTENÇA, para que produza os efeitos regulares, o acordo celebrado entre as partes (fls. [fls. XX]), nos termos do art. 487, inciso III, alínea “b”, do Código de Processo Civil, e, por consequência, DECRETO o divórcio do casal, com fundamento no art. 226, § 6º, da Constituição Federal, o qual será regido pelas cláusulas e condições fixadas no acordo."
+      ]
+    },
+    {
+      "id_canonico": "BLOCO_SUCUMBENCIA_RECIPROCA",
+      "secao_origem": "4.4. Blocos de Encerramento",
+      "tags": [
+        "sucumbencia",
+        "reciproca",
+        "custas",
+        "honorarios"
+      ],
+      "variaveis_requeridas": [
+        "PERCENTUAL HONORÁRIOS"
+      ],
+      "conteudo": [
+        "Havendo sucumbência recíproca, condeno ambas as partes ao pagamento das custas e despesas processuais, na proporção de 50% para cada, e dos honorários advocatícios ao patrono da parte adversa, que fixo em [PERCENTUAL HONORÁRIOS, EX: 10%]% sobre o valor da causa (ou sobre o proveito econômico), vedada a compensação, nos termos do art. 85, § 14, do CPC, observada eventual gratuidade de justiça."
+      ]
+    },
+    {
+      "id_canonico": "BLOCO_DISPOSITIVO_CURATELA_TERMO_ADVERTENCIAS",
+      "secao_origem": "4.3. Blocos de Dispositivo",
+      "tags": [
+        "curatela",
+        "termo",
+        "advertencia",
+        "autonomia",
+        "lbi"
+      ],
+      "variaveis_requeridas": [
+        "NOME_DA_AUTORA_OU_AUTOR"
+      ],
+      "conteudo": [
+        "Expeça-se termo de curatela definitiva em nome de [NOME_DA_AUTORA_OU_AUTOR].",
+        "Consigno que deverá constar do termo a advertência de que incumbe à curadora buscar tratamento e apoio apropriados à conquista da autonomia pelo interdito (CPC, art. 758), bem como o previsto nos arts. 1.755/1.756 do Código Civil e art. 84, § 4º, da Lei n. 13.146/2015."
+      ]
+    },
+    {
+      "id_canonico": "BLOCO_DISPOSITIVO_PROVIDENCIAS_SERVENTIA_755",
+      "secao_origem": "4.3. Blocos de Dispositivo",
+      "tags": [
+        "serventia",
+        "cumprimento",
+        "cpc_755",
+        "publicidade"
+      ],
+      "conteudo": [
+        "Promova a serventia as providências necessárias para o cumprimento integral do determinado no § 3º do art. 755 do Código de Processo Civil."
+      ]
+    },
+    {
+      "id_canonico": "BLOCO_SUCUMBENCIA_MINIMA_AUTOR",
+      "secao_origem": "4.4. Blocos de Encerramento",
+      "tags": [
+        "sucumbencia",
+        "minima",
+        "autor",
+        "condenacao_reu"
+      ],
+      "variaveis_requeridas": [
+        "PERCENTUAL HONORÁRIOS"
+      ],
+      "conteudo": [
+        "Tendo em vista que a parte autora sucumbiu em parte mínima do pedido, condeno a parte ré ao pagamento integral das custas, despesas processuais e honorários advocatícios, que fixo em [PERCENTUAL HONORÁRIOS, EX: 10%]% (dez por cento) sobre o valor atualizado da causa, nos termos do art. 86, parágrafo único, do CPC, observada eventual gratuidade de justiça."
+      ]
+    },
+    {
+      "id_canonico": "BLOCO_SEM_SUCUMBENCIA_SEM_RESISTENCIA",
+      "secao_origem": "4.4. Blocos de Encerramento",
+      "tags": [
+        "sucumbencia",
+        "isencao",
+        "ausencia_resistencia"
+      ],
+      "conteudo": [
+        "Deixo de condenar a parte ré nos ônus da sucumbência, uma vez que não ofereceu resistência ao pedido."
+      ]
+    },
+    {
+      "id_canonico": "BLOCO_SEM_CUSTAS_INTERDICAO",
+      "secao_origem": "4.4. Blocos de Encerramento",
+      "tags": [
+        "custas",
+        "isencao",
+        "interdicao"
+      ],
+      "conteudo": [
+        "Sem condenação em custas e honorários, ante a natureza da causa e a ausência de litigiosidade."
+      ]
+    },
+    {
+      "id_canonico": "BLOCO_DISPOSITIVO_FINAL_PADRAO_TESP",
+      "secao_origem": "4.4. Blocos de Encerramento",
+      "tags": [
+        "encerramento",
+        "padrao",
+        "apelacao",
+        "arquivamento",
+        "cg_136_2020",
+        "dare"
+      ],
+      "conteudo": [
+        "Sem prejuízo, nos termos do comunicado CG 136/2020, providencie a serventia a efetiva conferência das guias juntadas aos autos (queima das novas guias DARE) e certifique se todas elas se encontram vinculadas e utilizadas (queimadas). O serventuário deverá atentar para os termos do comunicado acima citado quanto à forma correta de proceder à vinculação e queima das respectivas guias.",
+        "Em caso de recurso de apelação, dê-se ciência à parte contrária para apresentar contrarrazões no prazo de 15 (quinze) dias úteis (CPC, art. 1.010, § 1º). Após, subam os presentes autos ao Egrégio Tribunal de Justiça de São Paulo.",
+        "Ciência ao Ministério Público.",
+        "Cumpridas as determinações e transitada em julgado, arquivem-se os autos com as cautelas de praxe.",
+        "P.R.I."
+      ]
+    },
+    {
+      "id_canonico": "BLOCO_TRANSITO_IMEDIATO_PRECLUSAO_LOGICA",
+      "secao_origem": "4.4. Blocos de Encerramento",
+      "tags": [
+        "transito_julgado",
+        "imediato",
+        "preclusao_logica"
+      ],
+      "conteudo": [
+        "Nos termos do artigo 1.000, caput e parágrafo único, do Código de Processo Civil, verifica-se ocorrida a preclusão lógica.",
+        "Consequentemente, a presente sentença transita em julgado nesta data, dispensada sua certificação."
+      ]
+    },
+    {
+      "id_canonico": "BLOCO_SENTENCA_SERVE_COMO_MANDADO",
+      "secao_origem": "4.4. Blocos de Encerramento",
+      "tags": [
+        "mandado_averbacao",
+        "sentenca_mandado",
+        "eficiencia"
+      ],
+      "variaveis_requeridas": [
+        "INSERIR MATRÍCULA",
+        "INSERIR COMARCA/DISTRITO"
+      ],
+      "conteudo": [
+        "A presente sentença servirá como mandado de averbação à certidão de casamento registrada sob o n. [INSERIR MATRÍCULA], do Ofício de Registro Civil das Pessoas Naturais de [INSERIR COMARCA/DISTRITO]."
+      ]
+    }
+  ]
+}

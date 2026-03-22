@@ -1,0 +1,21 @@
+﻿GIG portatil
+============
+
+1) Execute preflight_portable.bat para validar requisitos.
+2) Execute run_gig.bat para abrir o app.
+3) Se usar Elvin/Monk, execute set_gemini_api_key.bat.
+4) (Opcional) Execute create_desktop_shortcut.bat para criar atalho no Desktop.
+5) (Opcional) Se presente, leia MANUAL_INSTALACAO_INICIANTE.md.
+6) (Opcional) Se presente, consulte MANUAL_INSTALACAO_INICIANTE.pdf.
+
+Estrutura:
+- GIG\ (app compilado)
+- assets\gig_icon_modern.ico (icone custom do atalho)
+- run_gig.bat
+- preflight_portable.bat
+- preflight_portable.ps1
+- set_gemini_api_key.bat
+- create_desktop_shortcut.bat
+- create_desktop_shortcut.ps1
+- MANUAL_INSTALACAO_INICIANTE.md (opcional)
+- MANUAL_INSTALACAO_INICIANTE.pdf (opcional)

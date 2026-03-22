@@ -1,0 +1,40 @@
+{
+  "rules": [
+    {
+      "id": "ministerio_publico",
+      "label": "Manifestacao/Parecer MP",
+      "all_terms": ["ministerio publico"],
+      "any_terms": ["manifestacao", "parecer"]
+    },
+    {
+      "id": "decisao",
+      "label": "Decisao",
+      "all_terms": [],
+      "any_terms": ["decisao"]
+    },
+    {
+      "id": "despacho",
+      "label": "Despacho",
+      "all_terms": [],
+      "any_terms": ["despacho"]
+    },
+    {
+      "id": "peticao",
+      "label": "Peticao",
+      "all_terms": [],
+      "any_terms": ["peticao"]
+    },
+    {
+      "id": "contestacao",
+      "label": "Contestacao",
+      "all_terms": [],
+      "any_terms": ["contestacao"]
+    },
+    {
+      "id": "laudo_pericial",
+      "label": "Laudo pericial",
+      "all_terms": ["laudo"],
+      "any_terms": ["pericia", "pericial"]
+    }
+  ]
+}

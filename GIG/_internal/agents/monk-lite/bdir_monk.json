@@ -1,0 +1,466 @@
+{
+  "metadados_arquivo": {
+    "id_arquivo": "bdir:decision:v1",
+    "nome_amigavel": "BDir DECISION - Base de Conhecimento Juridico (JSON)",
+    "versao_conteudo": "v1.0",
+    "data_migracao": "2026-02-17",
+    "descricao": "Base juridica unificada para camada decisoria compartilhada por MONK, MINGUS e DECISION."
+  },
+  "secao_a_regras_ponderacao": [
+    {
+      "id": "REGRA_PREVALENCIA_DOCUMENTAL",
+      "titulo": "Prevalência da Prova Documental",
+      "tags": [
+        "prova",
+        "valoracao",
+        "patrimonio"
+      ],
+      "texto_diretriz": [
+        "Provas documentais (contratos, extratos, laudos) têm peso superior a provas testemunhais quando se trata de matéria patrimonial, salvo indício de fraude."
+      ]
+    },
+    {
+      "id": "REGRA_SINAIS_EXTERIORES_RIQUEZA",
+      "titulo": "Teoria da Aparência",
+      "tags": [
+        "alimentos",
+        "renda_oculta",
+        "teoria_aparencia"
+      ],
+      "texto_diretriz": [
+        "Na ausência de comprovação de renda formal or havendo indícios de ocultação de patrimônio, as decisões sobre a capacidade do alimentante devem ser fundamentadas na Teoria da Aparência.",
+        "Fotografias em redes sociais, padrão de consumo em faturas de cartão de crédito e aquisição de bens de alto valor são provas suficientes para a fixação de alimentos in valor superior ao declarado."
+      ]
+    },
+    {
+      "id": "REGRA_OBRIGACAO_AVOENGA_SUBSIDIARIA",
+      "titulo": "Responsabilidade dos Avós",
+      "tags": [
+        "alimentos",
+        "avoenga",
+        "subsidiaria"
+      ],
+      "texto_diretriz": [
+        "A responsabilidade dos avós de prestar alimentos é subsidiária e complementar à dos pais.",
+        "Sua condenação exige a demonstração inequívoca da impossibilidade total ou parcial dos genitores. A simples inadimplência do genitor principal não transfere automaticamente a obrigação."
+      ]
+    },
+    {
+      "id": "REGRA_ALIMENTOS_MAIOR_ESTUDANTE",
+      "titulo": "Alimentos para Filho Maior (Estudante)",
+      "tags": [
+        "alimentos",
+        "maioridade",
+        "estudante",
+        "sumula_358"
+      ],
+      "texto_diretriz": [
+        "A obrigação alimentar pode se estender ao filho maior de 18 anos, até a idade de 24 anos, desde que comprovada a matrícula e frequência em curso técnico ou superior.",
+        "O ônus da prova da necessidade passa a ser do alimentando (Súmula 358 STJ)."
+      ]
+    },
+    {
+      "id": "REGRA_DESEMPREGO_ALIMENTANTE",
+      "titulo": "Fixação em Caso de Desemprego",
+      "tags": [
+        "alimentos",
+        "desemprego",
+        "salario_minimo"
+      ],
+      "texto_diretriz": [
+        "A perda do emprego formal não acarreta a exoneração automática, mas a readequação.",
+        "Na ausência de vínculo, a pensão deve ser fixada em percentual do salário mínimo (usualmente 30%), ponderando-se a capacidade de exercer atividades informais, sem prejuízo da fixação concomitante da hipótese de vínculo empregatício quando o pedido de alimentos for acolhido."
+      ]
+    },
+    {
+      "id": "REGRA_ALIMENTOS_DISPOSITIVO_DUAL_CANONICO",
+      "titulo": "Padrão Canônico do Dispositivo em Alimentos",
+      "tags": [
+        "alimentos",
+        "dispositivo",
+        "vinculo_empregaticio",
+        "salario_minimo",
+        "base_calculo"
+      ],
+      "texto_diretriz": [
+        "Nos casos de acolhimento do pedido de alimentos, seja em ação autônoma de alimentos, seja em demanda com pedidos cumulados, o dispositivo deve contemplar obrigatoriamente duas hipóteses: (1) existência de vínculo empregatício e (2) inexistência de vínculo empregatício.",
+        "Na hipótese de vínculo empregatício, deve ser utilizada a definição canônica de rendimentos líquidos: ganhos brutos, incluindo 13º salário e terço constitucional de férias, com dedução exclusiva de Imposto de Renda e contribuição previdenciária; excluem-se verbas indenizatórias (FGTS e multa, aviso prévio indenizado, férias indenizadas, PLR, vale-transporte e vale-alimentação); nas verbas rescisórias, a incidência restringe-se às parcelas de natureza salarial (saldo de salário, 13º proporcional e férias proporcionais acrescidas do terço constitucional).",
+        "Na hipótese de inexistência de vínculo empregatício, a fixação deve ocorrer em percentual sobre o salário-mínimo vigente.",
+        "A redação final deve vincular os blocos [[BLOCO_DISPOSITIVO_ALIMENTOS_DUAL_SEM_PISO]] ou [[BLOCO_DISPOSITIVO_ALIMENTOS_DUAL_COM_PISO]], com reforço da cláusula de base de cálculo do bloco [[BLOCO_DISPOSITIVO_ALIMENTOS_BASE_CALCULO_AMPLA]]."
+      ]
+    },
+    {
+      "id": "REGRA_RECUSA_DNA",
+      "titulo": "Presunção por Recusa de DNA",
+      "tags": [
+        "investigacao",
+        "dna",
+        "recusa",
+        "sumula_301"
+      ],
+      "texto_diretriz": [
+        "A recusa do suposto pai em se submeter ao exame de DNA gera presunção relativa de paternidade (Súmula 301 STJ), a ser corroborada por outras provas."
+      ]
+    },
+    {
+      "id": "REGRA_GUARDA_COMPARTILHADA_PADRAO",
+      "titulo": "Guarda Compartilhada como Regra",
+      "tags": [
+        "guarda",
+        "compartilhada",
+        "consenso"
+      ],
+      "texto_diretriz": [
+        "A guarda compartilhada é a regra, mesmo em caso de dissenso entre os genitores, desde que ambos estejam aptos a exercer o poder familiar e não haja risco ao menor.",
+        "A incapacidade de diálogo cordial não é motivo suficiente para afastá-la (Art. 1.584, § 2º, CC)."
+      ]
+    },
+    {
+      "id": "REGRA_MELHOR_INTERESSE_SUPREMO",
+      "titulo": "Princípio do Melhor Interesse",
+      "tags": [
+        "guarda",
+        "principio",
+        "eca"
+      ],
+      "texto_diretriz": [
+        "O princípio do melhor interesse da criança rege todas as decisões. Acordos ou vontades dos pais devem ser secundarizados se colidirem com o bem-estar do menor."
+      ]
+    },
+    {
+      "id": "REGRA_PROVA_ALIENACAO_PARENTAL",
+      "titulo": "Caracterização da Alienação Parental",
+      "tags": [
+        "alienacao_parental",
+        "prova",
+        "laudo"
+      ],
+      "texto_diretriz": [
+        "Exige prova robusta da campanha de desqualificação e obstrução de vínculo. Relatórios psicológicos e mensagens textuais são provas de alto peso."
+      ]
+    },
+    {
+      "id": "REGRA_PARTILHA_BEM_FINANCIADO",
+      "titulo": "Partilha de Bens Financiados",
+      "tags": [
+        "partilha",
+        "financiamento",
+        "percentual"
+      ],
+      "texto_diretriz": [
+        "A partilha não incide sobre o valor total do bem, mas sobre o percentual correspondente às parcelas pagas durante a constância da união/casamento."
+      ]
+    },
+    {
+      "id": "REGRA_ALIMENTOS_EX_CONJUGE_EXCEPCIONAL",
+      "titulo": "Alimentos Transitórios para Ex-Cônjuge",
+      "tags": [
+        "alimentos",
+        "ex_conjuge",
+        "transitoriedade"
+      ],
+      "texto_diretriz": [
+        "Medida excepcional e transitória. Devem ser fixados por prazo certo, suficiente para reinserção no mercado de trabalho, salvo incapacidade laboral permanente."
+      ]
+    },
+    {
+      "id": "REGRA_PROVA_UNIAO_ESTAVEL_CONJUNTO",
+      "titulo": "Prova da União Estável",
+      "tags": [
+        "uniao_estavel",
+        "prova",
+        "affectio_maritalis"
+      ],
+      "texto_diretriz": [
+        "Não exige documento único. Forma-se pelo conjunto probatório (testemunhas, fotos, dependência econômica) que demonstre a 'affectio maritalis' e o intuito de constituir família."
+      ]
+    },
+    {
+      "id": "REGRA_NAMORO_QUALIFICADO_X_UNIAO_ESTAVEL",
+      "titulo": "Distinção de Namoro Qualificado",
+      "tags": [
+        "uniao_estavel",
+        "namoro_qualificado",
+        "coabitacao"
+      ],
+      "texto_diretriz": [
+        "Relacionamento público e duradouro, com coabitação eventual, sem intenção presente de constituir família (apenas projeto futuro), configura namoro qualificado, sem efeitos patrimoniais."
+      ]
+    },
+    {
+      "id": "REGRA_PREVALENCIA_SOCIOAFETIVIDADE",
+      "titulo": "Prevalência da Paternidade Socioafetiva",
+      "tags": [
+        "paternidade",
+        "socioafetiva",
+        "biologica"
+      ],
+      "texto_diretriz": [
+        "A paternidade socioafetiva consolidada prevalece sobre a verdade biológica. O reconhecimento voluntário (adoção à brasileira) é irrevogável (art. 1.609 CC) e impede anulação posterior por DNA negativo."
+      ]
+    },
+    {
+      "id": "REGRA_PERICIA_MEDICA_ESSENCIAL",
+      "titulo": "Perícia na Interdição",
+      "tags": [
+        "interdicao",
+        "curatela",
+        "pericia"
+      ],
+      "texto_diretriz": [
+        "A prova pericial médica é o elemento central e indispensável para a decretação da interdição, superando laudos particulares."
+      ]
+    },
+    {
+      "id": "REGRA_CURATELA_MEDICA_RESTRITA",
+      "titulo": "Limites da Curatela",
+      "tags": [
+        "curatela",
+        "limites",
+        "atos_patrimoniais"
+      ],
+      "texto_diretriz": [
+        "A sentença deve especificar os atos (geralmente patrimoniais e negociais). A curatela não alcança atos existenciais (direito ao corpo, voto, casamento) salvo exceção gravíssima."
+      ]
+    },
+    {
+      "id": "REGRA_SUCUMBENCIA_ALIMENTOS_FORMALIZACAO",
+      "titulo": "Sucumbência em Alimentos",
+      "tags": [
+        "sucumbencia",
+        "honorarios",
+        "causalidade"
+      ],
+      "texto_diretriz": [
+        "Mesmo se o valor fixado for próximo ao ofertado pelo réu, este responde pela sucumbência por ter dado causa à ação ao não formalizar o pagamento espontaneamente."
+      ]
+    },
+    {
+      "id": "DIR_DETECCAO_INEDITISMO",
+      "titulo": "Detecção de Anomalia Jurídica",
+      "tags": [
+        "analise",
+        "ineditismo",
+        "alerta"
+      ],
+      "texto_diretriz": [
+        "Comparar argumentos centrais com esta base. Se um fato essencial não encontrar correspondência, classificar como 'Anomalia Jurídica' e sinalizar para análise humana."
+      ]
+    },
+    {
+      "id": "DIR_FAST_TRACK_HOMOLOGATORIO",
+      "titulo": "Fast-Track para Homologações",
+      "tags": [
+        "fluxo",
+        "celeridade",
+        "acordo"
+      ],
+      "texto_diretriz": [
+        "Se (1) controvérsia se limitar à validade de acordo e (2) houver tese unificada: Sugerir pular Módulos de Prova e Valoração, avançando para Relatório."
+      ]
+    },
+    {
+      "id": "REGRA_CURATELA_DEVER_AUTONOMIA",
+      "titulo": "Dever de Estímulo à Autonomia",
+      "tags": [
+        "curatela",
+        "autonomia",
+        "cpc_758",
+        "lbi"
+      ],
+      "texto_diretriz": [
+        "Toda sentença que decretar a curatela deve, obrigatoriamente, consignar o dever do curador de buscar tratamento e apoio para a conquista da autonomia do interditado, conforme Art. 758 do CPC e Art. 84, § 4º da LBI.",
+        "A redação deve vincular o bloco [[BLOCO_DISPOSITIVO_CURATELA_TERMO_ADVERTENCIAS]]."
+      ]
+    },
+    {
+      "id": "REGRA_INTERDICAO_PROCEDIMENTOS_SERVENTIA",
+      "titulo": "Deveres de Publicidade e Registro (Art. 755 CPC)",
+      "tags": [
+        "serventia",
+        "publicidade",
+        "cpc_755",
+        "meta_civil"
+      ],
+      "texto_diretriz": [
+        "É imperativa a determinação para que a serventia realize a averbação no registro civil e a publicação de editais na rede mundial de computadores e na plataforma do CNJ.",
+        "Deve-se utilizar o bloco [[BLOCO_DISPOSITIVO_PROVIDENCIAS_SERVENTIA_755]] para garantir o cumprimento do § 3º do art. 755 do CPC. Esta é uma regra geral aplicável a todas as sentenças."
+      ]
+    },
+    {
+      "id": "REGRA_CONFORMIDADE_ADMINISTRATIVA_TESP",
+      "titulo": "Controle de Custas e Guias (CG 862/2023 e 136/2020)",
+      "tags": [
+        "custas",
+        "dare",
+        "fiscalizacao",
+        "tesp"
+      ],
+      "texto_diretriz": [
+        "Em observância às normas da Corregedoria Geral de Justiça (SP), o dispositivo deve prever a conferência de gratuidade (CG 862/2023) e a queima/vinculação de guias DARE (CG 136/2020) para evitar evasão fiscal e inconsistências sistêmicas.",
+        "Esta é uma regra geral aplicável a todas as sentenças. A redação do dispositivo final deve vincular obrigatoriamente o bloco [[BLOCO_DISPOSITIVO_FINAL_PADRAO_TESP]] para garantir o cumprimento das normas administrativas e o rito recursal/arquivamento."
+      ]
+    }
+  ],
+  "secao_b_fichas_tecnicas": [
+    {
+      "id_ficha": "FICHA_FAM_01",
+      "classe_processual": "Ação de Alimentos (Fixação)",
+      "foco_analise": "Trinômio Necessidade-Possibilidade-Proporcionalidade.",
+      "regras_tutela": {
+        "menoridade": "Presunção absoluta de necessidade.",
+        "maioridade": "Até 24 anos se estudante (presunção relativa).",
+        "base_calculo": "Rendimentos líquidos equivalem aos ganhos brutos (incluindo 13º salário e terço constitucional de férias), com dedução exclusiva de Imposto de Renda e contribuição previdenciária; excluem-se FGTS e multa, aviso prévio indenizado, férias indenizadas, PLR, vale-transporte e vale-alimentação; em verbas rescisórias, a incidência limita-se a saldo de salário, 13º proporcional e férias proporcionais acrescidas do terço constitucional."
+      },
+      "regras_documentais": {
+        "indispensavel": "Certidão de Nascimento.",
+        "renda": "Holerites ou prova de sinais exteriores de riqueza."
+      },
+      "dna_controversia": [
+        "Renda real do alimentante (formal vs informal).",
+        "Necessidades especiais do alimentando."
+      ]
+    },
+    {
+      "id_ficha": "FICHA_FAM_02",
+      "classe_processual": "Ação Revisional de Alimentos",
+      "foco_analise": "Alteração do binômio (Art. 1.699 CC).",
+      "regras_tutela": {
+        "requisito": "Prova cabal de mudança na situação financeira (desemprego, nova prole, doença)."
+      },
+      "regras_documentais": {
+        "indispensavel": "Cópia da decisão anterior que fixou os alimentos."
+      },
+      "dna_controversia": [
+        "Desemprego voluntário.",
+        "Aumento de despesas com idade."
+      ]
+    },
+    {
+      "id_ficha": "FICHA_FAM_03",
+      "classe_processual": "Divórcio e Partilha",
+      "foco_analise": "Vínculo matrimonial e regime de bens.",
+      "regras_processuais": {
+        "sub_rogacao": "Exige prova documental do rastreio do dinheiro.",
+        "dividas": "Presumem-se em benefício da família se contraídas na constância."
+      },
+      "regras_documentais": {
+        "indispensavel": "Certidão de Casamento Atualizada.",
+        "imoveis": "Matrículas.",
+        "veiculos": "Documentos CRLV/Tabela Fipe."
+      },
+      "dna_controversia": [
+        "Bens particulares vs comuns.",
+        "Valorização de cotas sociais.",
+        "Uso exclusivo de bem comum (arbitramento de aluguel)."
+      ]
+    },
+    {
+      "id_ficha": "FICHA_FAM_04",
+      "classe_processual": "Guarda e Convivência",
+      "foco_analise": "Melhor interesse da criança.",
+      "regras_tutela": {
+        "compartilhada": "Regra geral.",
+        "unilateral": "Exceção (risco ou inaptidão grave)."
+      },
+      "regras_documentais": {
+        "indispensavel": "Certidão de Nascimento.",
+        "tecnica": "Estudo Psicossocial (recomendado em litígio)."
+      },
+      "dna_controversia": [
+        "Alienação Parental.",
+        "Mudança de domicílio."
+      ]
+    },
+    {
+      "id_ficha": "FICHA_FAM_05",
+      "classe_processual": "Investigação/Negatória de Paternidade",
+      "foco_analise": "Vínculo Biológico vs Socioafetivo.",
+      "regras_processuais": {
+        "dna": "Prova ouro.",
+        "recusa": "Presunção Súmula 301 STJ.",
+        "socioafetividade": "Prevalece se consolidada (Posse do Estado de Filho)."
+      },
+      "regras_documentais": {
+        "indispensavel": "Certidão de Nascimento.",
+        "pericia": "Laudo de DNA."
+      }
+    },
+    {
+      "id_ficha": "FICHA_FAM_06",
+      "classe_processual": "Interdição (Curatela)",
+      "foco_analise": "Capacidade civil e proteção.",
+      "regras_processuais": {
+        "entrevista": "Obrigatória (Art. 751 CPC).",
+        "limites": "Definir atos específicos na sentença."
+      },
+      "regras_documentais": {
+        "indispensavel": "Laudo Médico (com CID).",
+        "preferencia": "Ordem legal de curadores (Cônjuge -> Pais -> Descendentes)."
+      }
+    },
+    {
+      "id_ficha": "FICHA_FAM_07",
+      "classe_processual": "Reconhecimento/Dissolução de União Estável",
+      "foco_analise": "Affectio Maritalis e publicidade.",
+      "regras_processuais": {
+        "regime": "Comunhão Parcial (regra geral sem contrato escrito).",
+        "marco_temporal": "Definir data inicial e final é crucial para a partilha."
+      },
+      "regras_documentais": {
+        "indispensavel": "Provas de convivência (contas, fotos, testemunhas).",
+        "contrato": "Escritura pública (se houver)."
+      }
+    }
+  ],
+  "secao_c_jurisprudencia_vinculante": [
+    {
+      "id": "JURIS_STJ_TESE_77_1",
+      "tema": "Retroatividade dos Alimentos",
+      "resumo": "A sentença retroage à data da citação.",
+      "conteudo_integral": "Os efeitos da sentença proferida em ação de revisão de alimentos - seja em caso de redução, majoração ou exoneração - retroagem à data da citação (Lei n. 5.478/68, art. 13, § 2º), ressalvada a irrepetibilidade dos valores adimplidos. (Jurisprudência em Teses n. 77)."
+    },
+    {
+      "id": "JURIS_STJ_TESE_65_14",
+      "tema": "Alimentos Ex-Cônjuge",
+      "resumo": "Caráter excepcional e transitório.",
+      "conteudo_integral": "Os alimentos devidos entre ex-cônjuges devem ter caráter excepcional, transitório e devem ser fixados por prazo determinado, exceto quando um dos cônjuges não possua mais condições de reinserção no mercado do trabalho. (Jurisprudência em Teses n. 65)."
+    },
+    {
+      "id": "JURIS_STJ_SUMULA_358",
+      "tema": "Cancelamento Maioridade",
+      "resumo": "Exige decisão judicial e contraditório.",
+      "conteudo_integral": "O cancelamento de pensão alimentícia de filho que atingiu a maioridade está sujeito à decisão judicial, mediante contraditório, ainda que nos próprios autos. (Súmula n. 358/STJ)."
+    },
+    {
+      "id": "JURIS_STJ_TESE_65_10",
+      "tema": "Base de Cálculo Alimentos",
+      "resumo": "Inclui 13º e Terço de Férias.",
+      "conteudo_integral": "A base de cálculo da pensão alimentícia fixada sobre o percentual do vencimento do alimentante abrange o décimo terceiro salário e o terço constitucional de férias, salvo disposição expressa em contrário. (Jurisprudência em Teses n. 65)."
+    },
+    {
+      "id": "JURIS_STJ_TESE_50_5",
+      "tema": "União Estável e Casamento",
+      "resumo": "Separação de fato permite nova união.",
+      "conteudo_integral": "A existência de casamento válido não obsta o reconhecimento da união estável, desde que haja separação de fato ou judicial entre os casados. (Jurisprudência em Teses n. 50)."
+    },
+    {
+      "id": "JURIS_STJ_TESE_113_4",
+      "tema": "Partilha FGTS",
+      "resumo": "FGTS comunica-se na partilha.",
+      "conteudo_integral": "Deve ser reconhecido o direito à meação dos valores depositados em conta vinculada ao FGTS auferidos durante a constância da união estável ou do casamento celebrado sob o regime da comunhão parcial. (Jurisprudência em Teses n. 113)."
+    },
+    {
+      "id": "JURIS_STJ_TESE_113_5",
+      "tema": "Valorização de Bens Particulares",
+      "resumo": "Valorização econômica não se comunica.",
+      "conteudo_integral": "A valorização patrimonial dos imóveis ou das cotas sociais adquiridos antes do casamento ou da união estável não deve integrar o patrimônio comum a ser partilhado, visto que decorre de fenômeno econômico que dispensa esforço comum. (Jurisprudência em Teses n. 113)."
+    },
+    {
+      "id": "JURIS_STJ_TESE_113_6",
+      "tema": "Previdência Privada Fechada",
+      "resumo": "Não integra partilha.",
+      "conteudo_integral": "Os valores investidos em previdência privada fechada se inserem, por analogia, na exceção prevista no art. 1.659, VII, do Código Civil, e não integram o patrimônio comum. (Jurisprudência em Teses n. 113)."
+    }
+  ]
+}
