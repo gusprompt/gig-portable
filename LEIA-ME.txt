@@ -1,4 +1,4 @@
-﻿GIG portatil
+gig_portable
 ============
 
 1) Execute preflight_portable.bat para validar requisitos.

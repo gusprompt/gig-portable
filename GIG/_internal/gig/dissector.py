@@ -174,16 +174,37 @@ def _build_context_fields(
     return build_piece_base_fields(piece_ref)
 
 
+def _normalize_file_group_key(arquivo_original: str) -> str:
+    nome = str(arquivo_original or "").strip()
+    if not nome:
+        return "(sem_arquivo)"
+    nome = re.sub(
+        r"\s*\(pag\.?\s*\d+\s*[-–]\s*\d+\)\s*(?=(\.[^.]+)?$)",
+        "",
+        nome,
+        flags=re.IGNORECASE,
+    )
+    nome = re.sub(
+        r"\s*\(pag\.?\s*\d+\)\s*(?=(\.[^.]+)?$)",
+        "",
+        nome,
+        flags=re.IGNORECASE,
+    )
+    nome = re.sub(r"\s{2,}", " ", nome).strip()
+    return nome or "(sem_arquivo)"
+
+
 def _group_items_by_file(items: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
     grouped: dict[str, list[dict[str, Any]]] = {}
     for row in items:
         if not isinstance(row, dict):
             continue
-        arquivo_original = str(row.get("arquivo_original", "") or "").strip() or "(sem_arquivo)"
-        grouped.setdefault(arquivo_original, []).append(dict(row))
+        arquivo_original = str(row.get("arquivo_original", "") or "").strip()
+        arquivo_base = _normalize_file_group_key(arquivo_original)
+        grouped.setdefault(arquivo_base, []).append(dict(row))
 
     arquivos: dict[str, dict[str, Any]] = {}
-    for arquivo_original, itens in grouped.items():
+    for arquivo_base, itens in grouped.items():
         itens_ordenados = sorted(
             itens,
             key=lambda item: (
@@ -191,11 +212,31 @@ def _group_items_by_file(items: list[dict[str, Any]]) -> dict[str, dict[str, Any
                 str(item.get("aip_inicio") or ""),
             ),
         )
-        arquivos[arquivo_original] = {
+        arquivos[arquivo_base] = {
             "total_itens": len(itens),
             "itens": itens_ordenados,
         }
     return arquivos
+
+
+def _group_items_by_category(items: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
+    grouped: dict[str, list[dict[str, Any]]] = {}
+    for row in items:
+        if not isinstance(row, dict):
+            continue
+        categoria = str(row.get("categoria", "") or "").strip() or "Sem classificacao"
+        grouped.setdefault(categoria, []).append(dict(row))
+
+    categorias: dict[str, dict[str, Any]] = {}
+    for categoria in sorted(grouped.keys(), key=lambda item: item.lower()):
+        itens = grouped[categoria]
+        arquivos = _group_items_by_file(itens)
+        categorias[categoria] = {
+            "total_itens": len(itens),
+            "total_arquivos_base": len(arquivos),
+            "arquivos": arquivos,
+        }
+    return categorias
 
 
 def _build_overview_bucket(items: list[dict[str, Any]]) -> dict[str, Any]:
@@ -230,20 +271,24 @@ def _build_grouped_context_map_payload(
     estrutura: dict[str, Any],
     lacunas_sem_texto: list[dict[str, Any]],
 ) -> dict[str, Any]:
+    _ = lacunas_sem_texto
     pecas = estrutura.get("pecas", [])
     if not isinstance(pecas, list):
         pecas = []
     arquivos = _group_items_by_file(pecas)
+    categorias = _group_items_by_category(pecas)
     return {
-        "schema": "ContextMapGrouped.v3",
-        "versao": "3.0",
+        "schema": "ContextMapGrouped.v4",
+        "versao": "4.0",
         "gerado_em": datetime.now(timezone.utc).isoformat(),
         "origem": OUTPUT_FILENAME,
         "total_arquivos_base": len(arquivos),
+        "total_categorias": len(categorias),
         "total_pecas": estrutura.get("total_pecas", len(pecas)),
         "total_paginas_pdf": estrutura.get("total_paginas_pdf", 0),
         "pecas_sem_texto": estrutura.get("pecas_sem_texto", 0),
         "arquivos": arquivos,
+        "categorias": categorias,
     }
 
 
@@ -279,11 +324,12 @@ def _build_gaps_tree_by_classification(
         for row in items:
             if not isinstance(row, dict):
                 continue
-            arquivo_original = str(row.get("arquivo_original", "") or "").strip() or "(sem_arquivo)"
-            grouped.setdefault(arquivo_original, []).append(dict(row))
+            arquivo_original = str(row.get("arquivo_original", "") or "").strip()
+            arquivo_base = _normalize_file_group_key(arquivo_original)
+            grouped.setdefault(arquivo_base, []).append(dict(row))
 
         arquivos: dict[str, dict[str, Any]] = {}
-        for arquivo_original, rows in grouped.items():
+        for arquivo_base, rows in grouped.items():
             ocorrencias_ordenadas = sorted(
                 rows,
                 key=lambda item: (
@@ -291,7 +337,7 @@ def _build_gaps_tree_by_classification(
                     str(item.get("aip_inicio") or ""),
                 ),
             )
-            arquivos[arquivo_original] = {
+            arquivos[arquivo_base] = {
                 "total_ocorrencias": len(rows),
                 "ocorrencias": ocorrencias_ordenadas,
             }
