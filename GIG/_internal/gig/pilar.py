@@ -4,10 +4,10 @@ Pilar: gera um mapa estrutural canonico a partir do processo completo e do recor
 Entrada:
     - texto ancorado completo com [AIP: X]
     - in_sumario_completo.json
-    - in_sumario_selecionadas.json
+    - in_sumario_estrutural.json
 
 Saida:
-    - in_structural_map.json
+    - in_mapa_estrutural.json
 """
 
 from __future__ import annotations
@@ -26,7 +26,7 @@ from gig.structural_core import (
 
 
 SCHEMA_NAME = "StructuralMap.v1"
-OUTPUT_FILENAME = "in_structural_map.json"
+OUTPUT_FILENAME = "in_mapa_estrutural.json"
 DEPURATION_LEVEL_NONE = "nenhum"
 DEPURATION_LEVEL_CONSERVATIVE = "conservador"
 DEPURATION_LEVEL_AGGRESSIVE = "agressivo"

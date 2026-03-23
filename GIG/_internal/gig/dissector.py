@@ -45,7 +45,7 @@ OUTPUT_FILENAME = "in_context_map.json"
 GROUPED_OUTPUT_FILENAME = "in_context_map_grouped.json"
 LACUNAS_OUTPUT_FILENAME = "in_context_gaps_map.json"
 OVERVIEW_OUTPUT_FILENAME = "in_context_overview.json"
-DEFAULT_SELECTED_SUMMARY_SOURCE = "in_sumario_selecionadas.json"
+DEFAULT_SELECTED_SUMMARY_SOURCE = "in_sumario_estrutural.json"
 DEFAULT_OMIT_TEXT_CATEGORIES: frozenset[str] = frozenset({"Certidão de Publicação"})
 
 
@@ -646,7 +646,7 @@ if __name__ == "__main__":
         "--selected-summary",
         metavar="PATH",
         default=None,
-        help="Caminho do in_sumario_selecionadas.json para marcar pecas fornecidas integralmente",
+        help="Caminho do in_sumario_estrutural.json para marcar pecas fornecidas integralmente",
     )
     parser.add_argument(
         "--omit-category",
