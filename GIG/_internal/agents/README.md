@@ -1,22 +1,29 @@
-# Estrutura Modular de Agentes (GIG)
+# Estrutura Modular de Speks (GIG)
 
-Este diretorio centraliza a versao modular dos agentes.
+Este diretorio centraliza a versao modular dos speks.
+
+Nota terminologica:
+
+- `spek` e a nomenclatura atual da classe de produto
+- `agents/` permanece como diretorio legado durante a transicao
+- nomes como `agent.<agente>.json` ainda existem por compatibilidade estrutural
+
 Padrao adotado:
 
 - `agents/<agente>/`
-- Cada agente contem:
+- Cada spek contem:
  - `manifest.json`
  - `metadata.json`
  - `boot.json`
  - `schemas.json`
- - `extras.json` (campos adicionais do agente)
- - `modules/*.json` (um arquivo por modulo)
+  - `extras.json` (campos adicionais do spek)
+  - `modules/*.json` (um arquivo por modulo)
 - `dist/agent.<agente>.json` (saida monolitica para consumo do app)
 
 ## Estado atual do app
 
-- Agente core em uso operacional: `monk-lite`
-- Os agentes removidos do app ativo foram arquivados em `03_LEGACY`
+- Spek core em uso operacional: `monk-lite`
+- Os speks removidos do app ativo foram arquivados em `03_LEGACY`
 
 ## Comandos
 
@@ -37,6 +44,12 @@ python .\AGENTS\GIG_agents\scripts\agent_modular_manager.py build-all `
 
 O app continua lendo JSON monolitico normalmente.
 A estrutura modular serve como fonte de manutencao e auditoria.
+
+Referencias do repo:
+
+- `docs/apresentacao/GIG.md`
+- `docs/operacional/GIG_V2_TEMPLATE_PACOTE_AGENTE.md`
+- `docs/operacional/FERRAMENTAS_E_ARTEFATOS_PARA_AGENTES.md`
 
 ## Terminologia obrigatoria
 

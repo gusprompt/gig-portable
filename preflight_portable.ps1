@@ -19,31 +19,85 @@ function Write-CheckResult {
     }
 }
 
-Write-Host "Preflight GIG (portatil)" -ForegroundColor Cyan
-Write-Host ""
+function Test-VersionCommand {
+    param(
+        [string]$FilePath,
+        [string[]]$ArgumentList
+    )
 
-$checks = @()
-
-$exeDir = Resolve-Path (Split-Path -Parent $MyInvocation.MyCommand.Path)
-$parentDir = Resolve-Path (Join-Path $exeDir "..")
-$appExeCandidates = @(
-    (Join-Path $exeDir "GIG\GIG.exe"),
-    (Join-Path $exeDir "dist\GIG\GIG.exe"),
-    (Join-Path $parentDir "GIG\GIG.exe"),
-    (Join-Path $parentDir "dist\GIG\GIG.exe")
-)
-$appExe = $null
-foreach ($candidate in $appExeCandidates) {
-    if (Test-Path $candidate) {
-        $appExe = $candidate
-        break
+    if (-not (Test-Path $FilePath)) {
+        return $false
     }
+
+    $null = & $FilePath @ArgumentList
+    return $LASTEXITCODE -eq 0
 }
 
+Write-Host "Preflight GIG (portatil com OCR embutido)" -ForegroundColor Cyan
+Write-Host ""
+
+$root = (Resolve-Path (Split-Path -Parent $MyInvocation.MyCommand.Path)).Path
+$appExe = Join-Path $root "GIG\GIG.exe"
+$packRoot = Join-Path $root "gig_ocr_pack_app_dev_clean"
+$ocrPython = Join-Path $packRoot "ocr-runtime\python\python.exe"
+$tesseractExe = Join-Path $packRoot "Tesseract-OCR\tesseract.exe"
+$qpdfExe = Join-Path $packRoot "qpdf-portable\bin\qpdf.exe"
+$ghostscriptExe = Join-Path $packRoot "ghostscript\bin\gswin64c.exe"
+if (-not (Test-Path $ghostscriptExe)) {
+    $ghostscriptExe = Join-Path $packRoot "ghostscript\bin\gswin32c.exe"
+}
+
+$checks = @()
 $checks += @{
     Name = "Build local"
-    Ok = -not [string]::IsNullOrWhiteSpace($appExe)
-    Detail = "GIG.exe em GIG\\ ou dist\\GIG"
+    Ok = Test-Path $appExe
+    Detail = "GIG\\GIG.exe presente"
+    Blocking = $true
+}
+$checks += @{
+    Name = "OCR pack embutido"
+    Ok = Test-Path $packRoot
+    Detail = "gig_ocr_pack_app_dev_clean presente"
+    Blocking = $true
+}
+$checks += @{
+    Name = "Python OCR local"
+    Ok = Test-Path $ocrPython
+    Detail = "ocr-runtime\\python\\python.exe presente"
+    Blocking = $true
+}
+$checks += @{
+    Name = "Tesseract embutido"
+    Ok = Test-VersionCommand -FilePath $tesseractExe -ArgumentList @("--version")
+    Detail = "Tesseract local responde"
+    Blocking = $true
+}
+$checks += @{
+    Name = "qpdf embutido"
+    Ok = Test-VersionCommand -FilePath $qpdfExe -ArgumentList @("--version")
+    Detail = "qpdf local responde"
+    Blocking = $true
+}
+$checks += @{
+    Name = "Ghostscript embutido"
+    Ok = Test-VersionCommand -FilePath $ghostscriptExe -ArgumentList @("-v")
+    Detail = "Ghostscript local responde"
+    Blocking = $true
+}
+$checks += @{
+    Name = "ocrmypdf embutido"
+    Ok = (Test-Path $ocrPython) -and ((& $ocrPython -m ocrmypdf --version) -or $LASTEXITCODE -eq 0)
+    Detail = "ocrmypdf local responde"
+    Blocking = $true
+}
+
+foreach ($lang in @("por", "eng", "osd")) {
+    $checks += @{
+        Name = "Idioma OCR $lang"
+        Ok = Test-Path (Join-Path $packRoot "Tesseract-OCR\tessdata\$lang.traineddata")
+        Detail = "$lang.traineddata presente"
+        Blocking = $true
+    }
 }
 
 $apiKey = [Environment]::GetEnvironmentVariable("GEMINI_API_KEY", "User")
@@ -54,46 +108,25 @@ $checks += @{
     Name = "GEMINI_API_KEY"
     Ok = -not [string]::IsNullOrWhiteSpace($apiKey)
     Detail = "Necessaria para Elvin/Monk"
-}
-
-$tesseract = Get-Command tesseract
-$checks += @{
-    Name = "Tesseract (opcional)"
-    Ok = $null -ne $tesseract
-    Detail = "Recomendado para OCR robusto no modo PDF-Texto"
-}
-
-$gs = Get-Command gswin64c
-if ($null -eq $gs) { $gs = Get-Command gswin32c }
-$checks += @{
-    Name = "Ghostscript (opcional)"
-    Ok = $null -ne $gs
-    Detail = "Usado por OCRmyPDF"
-}
-
-$qpdf = Get-Command qpdf
-$checks += @{
-    Name = "qpdf (opcional)"
-    Ok = $null -ne $qpdf
-    Detail = "Usado por OCRmyPDF"
+    Blocking = $false
 }
 
 $allOk = $true
-foreach ($c in $checks) {
-    Write-CheckResult -Name $c.Name -Ok $c.Ok -Detail $c.Detail
-    if (-not $c.Ok -and $c.Name -in @("Build local", "GEMINI_API_KEY")) {
+foreach ($check in $checks) {
+    Write-CheckResult -Name $check.Name -Ok $check.Ok -Detail $check.Detail
+    if (-not $check.Ok -and $check.Blocking) {
         $allOk = $false
     }
 }
 
 Write-Host ""
 if ($allOk) {
-    Write-Host "Preflight concluido: pronto para execucao." -ForegroundColor Green
+    Write-Host "Preflight concluido: pacote pronto para execucao com OCR embutido." -ForegroundColor Green
     exit 0
 }
 
-Write-Host "Preflight concluido com alertas bloqueantes." -ForegroundColor Yellow
+Write-Host "Preflight concluiu com falhas bloqueantes no pacote." -ForegroundColor Yellow
 if (-not $Quiet) {
-    Write-Host "Ajuste os itens acima e execute novamente."
+    Write-Host "Revise os itens acima antes de distribuir este portable."
 }
 exit 1

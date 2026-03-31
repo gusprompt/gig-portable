@@ -1,6 +1,6 @@
 # gig_portable
 
-Pacote portatil do GIG para copia e execucao sem instalacao do Python.
+Pacote portatil do GIG para copia e execucao sem instalacao de Python nem dos componentes de OCR.
 
 ## Como usar
 
@@ -12,6 +12,7 @@ Pacote portatil do GIG para copia e execucao sem instalacao do Python.
 ## Estrutura
 
 - `GIG/`: app compilado
+- `gig_ocr_pack_app_dev_clean/`: OCR embutido com `Tesseract`, `Ghostscript`, `qpdf` e runtime local de `ocrmypdf`
 - `assets/gig_icon_modern.ico`: icone do atalho
 - `run_gig.bat`
 - `preflight_portable.bat`
@@ -19,9 +20,11 @@ Pacote portatil do GIG para copia e execucao sem instalacao do Python.
 - `set_gemini_api_key.bat`
 - `create_desktop_shortcut.bat`
 - `create_desktop_shortcut.ps1`
+- `scripts/launch_gig_portable_hidden.ps1`
 
 ## Observacoes
 
 - `Filtro` funciona offline.
 - `Monk` exige `GEMINI_API_KEY`.
-- OCR robusto no modo PDF-Texto pode exigir Tesseract, Ghostscript e qpdf no sistema.
+- OCR robusto no modo PDF-Texto ja vem embutido neste pacote.
+- O launcher do portable configura automaticamente as variaveis `GIG_OCR_PACK_ROOT`, `GIG_OCR_PYTHON` e `GIG_OCR_TEMP_ROOT`.

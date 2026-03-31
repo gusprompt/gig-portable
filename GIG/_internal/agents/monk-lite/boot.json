@@ -30,8 +30,14 @@
       "*/Monk/preprocess/processo_texto_ancorado.txt"
     ],
     "in_alerta_visual": [
+      "Monk/entrada/in_alerta_visual.txt",
+      "*/Monk/entrada/in_alerta_visual.txt",
+      "Monk/preprocess/alerta_visual_resumo.txt",
+      "*/Monk/preprocess/alerta_visual_resumo.txt",
       "Monk/preprocess/alerta_visual_resumo.md",
       "*/Monk/preprocess/alerta_visual_resumo.md",
+      "Monk/entrada/in_alerta_visual.md",
+      "*/Monk/entrada/in_alerta_visual.md",
       "Monk/entrada/in_Alerta_Visual.md",
       "*/Monk/entrada/in_Alerta_Visual.md"
     ]

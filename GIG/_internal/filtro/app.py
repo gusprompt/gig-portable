@@ -106,6 +106,7 @@ class ProcessingConfig:
     main_rules: list[dict[str, Any]]
     main_categories_override: set[str] | None = None
     main_file_indexes_override: set[int] | None = None
+    main_folio_ranges_override: list[tuple[int, int]] | None = None
     integral_mode: bool = False
     batch_only_mode: bool = False
     batch_max_size_mb: int = DEFAULT_BATCH_MAX_SIZE_MB
@@ -179,6 +180,9 @@ def sanitize_component(name: str, fallback: str = "SemCategoria") -> str:
 
 
 def default_output_dir() -> Path:
+    configured_global = os.environ.get("GIG_DEFAULT_OUTPUT_DIR", "").strip()
+    if configured_global:
+        return Path(configured_global).expanduser()
     configured = os.environ.get(DEFAULT_OUTPUT_ENV_VAR, "").strip()
     if configured:
         return Path(configured).expanduser()
@@ -414,6 +418,54 @@ def piece_intersects_folio_ranges(
             continue
         return True
     return False
+
+
+def folio_in_ranges(
+    folio: int | None,
+    folio_ranges: list[tuple[int, int]] | None,
+) -> bool:
+    if folio is None or folio <= 0 or not folio_ranges:
+        return False
+    for range_start, range_end in folio_ranges:
+        if range_start <= folio <= range_end:
+            return True
+    return False
+
+
+def group_contiguous_page_indexes(page_indexes: list[int]) -> list[list[int]]:
+    normalized = sorted({int(page_index) for page_index in page_indexes if int(page_index) >= 0})
+    if not normalized:
+        return []
+
+    groups: list[list[int]] = []
+    current_group = [normalized[0]]
+    for page_index in normalized[1:]:
+        if page_index == current_group[-1] + 1:
+            current_group.append(page_index)
+            continue
+        groups.append(current_group)
+        current_group = [page_index]
+    groups.append(current_group)
+    return groups
+
+
+def format_folio_ranges_for_observation(folios: list[int]) -> str:
+    normalized = sorted({int(folio) for folio in folios if int(folio) > 0})
+    if not normalized:
+        return ""
+
+    parts: list[str] = []
+    start = normalized[0]
+    end = normalized[0]
+    for folio in normalized[1:]:
+        if folio == end + 1:
+            end = folio
+            continue
+        parts.append(f"{start}-{end}" if start != end else str(start))
+        start = folio
+        end = folio
+    parts.append(f"{start}-{end}" if start != end else str(start))
+    return ", ".join(parts)
 
 
 def _pdf_escape_text(value: str) -> str:
@@ -1111,6 +1163,7 @@ def build_ia_pdf_and_reports(
     selected_summary_json_path: Path | None,
     selected_summary_md_path: Path | None,
     *,
+    selected_folio_ranges: list[tuple[int, int]] | None = None,
     replace_photo_pages: bool = True,
     crop_signature_strip_right: bool = False,
     crop_signature_strip_width_points: float = DEFAULT_SIGNATURE_STRIP_RIGHT_CROP_POINTS,
@@ -1166,39 +1219,66 @@ def build_ia_pdf_and_reports(
                 "original_excluido=true"
             )
         merged_obs = _merge_piece_observation(obs, photo_note)
+        selected_page_indexes = list(range(page_count))
+        if selected_folio_ranges:
+            selected_page_indexes = [
+                page_index
+                for page_index, mapped_folio in enumerate(_mapped_folios)
+                if folio_in_ranges(mapped_folio if isinstance(mapped_folio, int) else None, selected_folio_ranges)
+            ]
 
-        mapped_valid = [folio for folio in _mapped_folios if isinstance(folio, int) and folio > 0]
-        if mapped_valid:
-            page_start_out = mapped_valid[0]
-            page_end_out = mapped_valid[-1]
-        else:
-            page_start_out = output_page_cursor + 1 if page_count else ""
-            page_end_out = output_page_cursor + page_count if page_count else ""
-        summary_rows.append(
-            {
-                "ordem_compilacao": piece.source_index,
-                "categoria": piece.category,
-                "arquivo_original": piece.original_name,
-                "fls_inicial_original": piece.folio_start or "",
-                "fls_final_original": piece.folio_end or "",
-                "paginas_pdf_fonte": page_count,
-                "pagina_inicial_pdf_ia": page_start_out,
-                "pagina_final_pdf_ia": page_end_out,
-                "observacao": merged_obs,
-            }
-        )
+        page_groups = group_contiguous_page_indexes(selected_page_indexes)
+        if not page_groups:
+            continue
 
-        for page_index, page in enumerate(reader.pages):
-            if marker_kind is None:
-                writer.add_page(page)
+        for page_group in page_groups:
+            selected_folios = [
+                _mapped_folios[page_index]
+                for page_index in page_group
+                if page_index < len(_mapped_folios) and isinstance(_mapped_folios[page_index], int) and _mapped_folios[page_index] > 0
+            ]
+            if selected_folios:
+                page_start_out = selected_folios[0]
+                page_end_out = selected_folios[-1]
             else:
-                _add_photo_placeholder_page(writer, page, marker_kind, piece.original_name)
-            added_page = writer.pages[-1]
-            if crop_signature_strip_right:
-                _crop_right_margin(added_page, crop_signature_strip_width_points)
-            mapped_folio = _mapped_folios[page_index] if page_index < len(_mapped_folios) else None
-            output_page_folios.append(mapped_folio)
-            output_page_cursor += 1
+                page_start_out = output_page_cursor + 1 if page_group else ""
+                page_end_out = output_page_cursor + len(page_group) if page_group else ""
+
+            segment_obs = merged_obs
+            if selected_folio_ranges:
+                selected_folios_text = format_folio_ranges_for_observation(selected_folios)
+                if selected_folios_text:
+                    segment_obs = _merge_piece_observation(
+                        segment_obs,
+                        f"recorte_exato_folhas={selected_folios_text}",
+                    )
+
+            summary_rows.append(
+                {
+                    "ordem_compilacao": piece.source_index,
+                    "categoria": piece.category,
+                    "arquivo_original": piece.original_name,
+                    "fls_inicial_original": piece.folio_start or "",
+                    "fls_final_original": piece.folio_end or "",
+                    "paginas_pdf_fonte": len(page_group),
+                    "pagina_inicial_pdf_ia": page_start_out,
+                    "pagina_final_pdf_ia": page_end_out,
+                    "observacao": segment_obs,
+                }
+            )
+
+            for page_index in page_group:
+                page = reader.pages[page_index]
+                if marker_kind is None:
+                    writer.add_page(page)
+                else:
+                    _add_photo_placeholder_page(writer, page, marker_kind, piece.original_name)
+                added_page = writer.pages[-1]
+                if crop_signature_strip_right:
+                    _crop_right_margin(added_page, crop_signature_strip_width_points)
+                mapped_folio = _mapped_folios[page_index] if page_index < len(_mapped_folios) else None
+                output_page_folios.append(mapped_folio)
+                output_page_cursor += 1
 
         included_docs += 1
 
@@ -1545,10 +1625,20 @@ def process_zip(config: ProcessingConfig, log: Callable[[str], None] | None = No
 
     selected_main_categories = config.main_categories_override
     selected_main_file_indexes = config.main_file_indexes_override
+    selected_main_folio_ranges = config.main_folio_ranges_override
 
-    def selection_for_item(index: int, category: str) -> tuple[bool, str]:
+    def selection_for_item(
+        index: int,
+        category: str,
+        folio_start: int | None = None,
+        folio_end: int | None = None,
+    ) -> tuple[bool, str]:
         if config.integral_mode:
             return True, "processamento_integral"
+        if selected_main_folio_ranges is not None:
+            if piece_intersects_folio_ranges(folio_start, folio_end, selected_main_folio_ranges):
+                return True, "selecao_folhas_exatas"
+            return False, "nao_selecionado_folhas_exatas"
         if selected_main_file_indexes is not None:
             if index in selected_main_file_indexes:
                 return True, "selecao_folhas"
@@ -1571,6 +1661,8 @@ def process_zip(config: ProcessingConfig, log: Callable[[str], None] | None = No
 
     if config.integral_mode:
         selection_criteria = "integral"
+    elif selected_main_folio_ranges is not None:
+        selection_criteria = "folhas_exatas"
     elif selected_main_file_indexes is not None:
         selection_criteria = "folhas"
     elif selected_main_categories is not None:
@@ -1636,7 +1728,7 @@ def process_zip(config: ProcessingConfig, log: Callable[[str], None] | None = No
 
                 category = base_category_from_name(original_name)
                 safe_file_name = sanitize_component(Path(original_name).name, "arquivo")
-                is_selected_now, matched_rule = selection_for_item(idx, category)
+                is_selected_now, matched_rule = selection_for_item(idx, category, folio_start, folio_end)
                 master_group = "pecas_principais" if is_selected_now else "documentos_auxiliares"
 
                 target_root = main_root if is_selected_now else auxiliary_root
@@ -1701,7 +1793,11 @@ def process_zip(config: ProcessingConfig, log: Callable[[str], None] | None = No
                 continue
             category = str(row.get("categoria", ""))
             original_name = str(row.get("arquivo_original", ""))
-            is_selected_now, _matched_rule = selection_for_item(idx, category)
+            folio_start = parse_int(row.get("fls_inicial_original"))
+            folio_end = parse_int(row.get("fls_final_original"))
+            is_selected_now, _matched_rule = selection_for_item(idx, category, folio_start, folio_end)
+            if folio_end is not None:
+                max_folio_in_process = max(max_folio_in_process, folio_end)
             if is_selected_now:
                 main_files += 1
             else:
@@ -1719,10 +1815,6 @@ def process_zip(config: ProcessingConfig, log: Callable[[str], None] | None = No
                 emit(f"Aviso: arquivo selecionado nao encontrado na base local: {rel_dest}")
                 continue
 
-            folio_start = parse_int(row.get("fls_inicial_original"))
-            folio_end = parse_int(row.get("fls_final_original"))
-            if folio_end is not None:
-                max_folio_in_process = max(max_folio_in_process, folio_end)
             main_pdf_inputs.append(
                 PiecePdfInput(
                     order_key=page_sort_key(original_name, idx),
@@ -1756,6 +1848,7 @@ def process_zip(config: ProcessingConfig, log: Callable[[str], None] | None = No
         ia_pdf_destination,
         selected_summary_json_path,
         selected_summary_md_path,
+        selected_folio_ranges=selected_main_folio_ranges,
         replace_photo_pages=config.replace_photo_pages,
         crop_signature_strip_right=config.crop_signature_strip_right,
         crop_signature_strip_width_points=config.crop_signature_strip_width_points,
@@ -1780,18 +1873,19 @@ def process_zip(config: ProcessingConfig, log: Callable[[str], None] | None = No
             continue
 
     if persist_static_summary:
-        for row in full_summary_rows:
-            idx = parse_int(row.get("indice"))
-            if idx is None:
-                continue
-            selected_row = selected_summary_by_index.get(idx)
-            if selected_row is None:
-                continue
-            row["pagina_inicial_pdf_ia"] = selected_row.get("pagina_inicial_pdf_ia", "")
-            row["pagina_final_pdf_ia"] = selected_row.get("pagina_final_pdf_ia", "")
-            row["aip_inicio"] = _format_aip_marker(row["pagina_inicial_pdf_ia"])
-            row["aip_fim"] = _format_aip_marker(row["pagina_final_pdf_ia"])
-            row["observacao_pdf_ia"] = selected_row.get("observacao", "")
+        if selected_main_folio_ranges is None:
+            for row in full_summary_rows:
+                idx = parse_int(row.get("indice"))
+                if idx is None:
+                    continue
+                selected_row = selected_summary_by_index.get(idx)
+                if selected_row is None:
+                    continue
+                row["pagina_inicial_pdf_ia"] = selected_row.get("pagina_inicial_pdf_ia", "")
+                row["pagina_final_pdf_ia"] = selected_row.get("pagina_final_pdf_ia", "")
+                row["aip_inicio"] = _format_aip_marker(row["pagina_inicial_pdf_ia"])
+                row["aip_fim"] = _format_aip_marker(row["pagina_final_pdf_ia"])
+                row["observacao_pdf_ia"] = selected_row.get("observacao", "")
 
         now_iso = datetime.now().isoformat(timespec="seconds")
         total_nao_fornecidas = sum(1 for row in full_summary_rows if row.get("status_fornecimento") == "nao_selecionada")
@@ -2630,31 +2724,42 @@ class App(tk.Tk):
                 shown += 1
             visible_var.set(f"Exibidas: {shown}/{len(piece_candidates)} pecas")
 
-        def select_folio_ranges() -> None:
+        initial_selected = set(initial_selection)
+
+        def get_selected_indexes() -> set[int]:
+            return {idx for idx, var in check_vars.items() if var.get()}
+
+        def apply_folio_ranges() -> bool:
             raw = folio_range_var.get().strip()
             if not raw:
                 messagebox.showinfo("Faixas de folhas", "Informe ao menos uma faixa (ex.: 120-180, 240).")
-                return
+                return False
             try:
                 ranges = parse_folio_selection_ranges(raw)
             except ValueError as exc:
                 messagebox.showerror("Faixas de folhas", str(exc))
-                return
+                return False
 
-            matched = 0
+            matched_indexes: set[int] = set()
             for piece in piece_candidates:
                 idx = int(piece["source_index"])
                 start = piece.get("fls_inicial_original")
                 end = piece.get("fls_final_original")
-                if piece_intersects_folio_ranges(start if isinstance(start, int) else None, end if isinstance(end, int) else None, ranges):
-                    if not check_vars[idx].get():
-                        check_vars[idx].set(True)
-                    matched += 1
-            update_summary()
-            if matched == 0:
+                if piece_intersects_folio_ranges(
+                    start if isinstance(start, int) else None,
+                    end if isinstance(end, int) else None,
+                    ranges,
+                ):
+                    matched_indexes.add(idx)
+
+            if not matched_indexes:
                 messagebox.showinfo("Faixas de folhas", "Nenhuma peca com faixa de folhas compativel foi encontrada.")
-            else:
-                messagebox.showinfo("Faixas de folhas", f"{matched} peca(s) marcada(s) pela faixa informada.")
+                return False
+
+            for idx, var in check_vars.items():
+                var.set(idx in matched_indexes)
+            update_summary()
+            return True
 
         search_var.trace_add("write", refresh_filter)
         refresh_filter()
@@ -2687,30 +2792,49 @@ class App(tk.Tk):
         ttk.Button(actions, text="Marcar sugeridas", command=mark_suggested).pack(side="left")
         ttk.Button(actions, text="Marcar todas", command=mark_all).pack(side="left", padx=(8, 0))
         ttk.Button(actions, text="Limpar", command=clear_all).pack(side="left", padx=(8, 0))
-        ttk.Button(actions, text="Selecionar faixa", command=select_folio_ranges).pack(side="left", padx=(16, 0))
-
         result: set[int] | None = None
 
-        def confirm_selection() -> None:
+        def finalize_selection(selected: set[int]) -> bool:
             nonlocal result
-            selected = {idx for idx, var in check_vars.items() if var.get()}
             if not selected:
                 proceed = messagebox.askyesno(
                     "Selecao vazia",
                     "Nenhuma peca foi selecionada como principal. Deseja continuar assim mesmo?",
                 )
                 if not proceed:
-                    return
+                    return False
             result = selected
             dialog.destroy()
+            return True
+
+        def confirm_selection() -> None:
+            finalize_selection(get_selected_indexes())
+
+        def apply_ranges_and_confirm() -> None:
+            if not apply_folio_ranges():
+                return
+            finalize_selection(get_selected_indexes())
 
         def cancel_selection() -> None:
             nonlocal result
+            current_selection = get_selected_indexes()
+            if current_selection != initial_selected:
+                save_before_close = messagebox.askyesnocancel(
+                    "Salvar selecao",
+                    "A selecao foi alterada. Deseja salvar antes de fechar?",
+                )
+                if save_before_close is None:
+                    return
+                if save_before_close:
+                    if not finalize_selection(current_selection):
+                        return
+                    return
             result = None
             dialog.destroy()
 
+        ttk.Button(folio_row, text="Selecionar faixa e fechar", command=apply_ranges_and_confirm).pack(side="left", padx=(16, 0))
+        ttk.Button(actions, text="Salvar selecao e fechar", command=confirm_selection).pack(side="left", padx=(16, 0))
         ttk.Button(actions, text="Cancelar", command=cancel_selection).pack(side="right")
-        ttk.Button(actions, text="Processar com selecao", command=confirm_selection).pack(side="right", padx=(0, 8))
 
         dialog.protocol("WM_DELETE_WINDOW", cancel_selection)
         dialog.wait_visibility()

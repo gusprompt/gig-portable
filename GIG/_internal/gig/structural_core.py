@@ -202,11 +202,11 @@ def iter_active_piece_refs(
 
 def build_piece_base_fields(piece_ref: StructuralPieceRef) -> dict[str, Any]:
     return {
+        "aip_inicio": piece_ref.aip_inicio,
+        "aip_fim": piece_ref.aip_fim,
         "ordem_compilacao": piece_ref.ordem_compilacao,
         "arquivo_original": piece_ref.arquivo_original,
         "categoria": piece_ref.categoria,
-        "aip_inicio": piece_ref.aip_inicio,
-        "aip_fim": piece_ref.aip_fim,
     }
 
 

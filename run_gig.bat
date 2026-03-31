@@ -1,53 +1,33 @@
 @echo off
 setlocal
 set "BASE_DIR=%~dp0"
-set "APP_DIR=%BASE_DIR%GIG"
-if not exist "%APP_DIR%\GIG.exe" (
-  set "APP_DIR=%BASE_DIR%dist\GIG"
-)
+if "%BASE_DIR:~-1%"=="\" set "BASE_DIR=%BASE_DIR:~0,-1%"
+
+set "PACK_ROOT=%BASE_DIR%\gig_ocr_pack_app_dev_clean"
+set "APP_DIR=%BASE_DIR%\GIG"
 set "APP_EXE=%APP_DIR%\GIG.exe"
-set "VENV_PY=%BASE_DIR%\.venv\Scripts\python.exe"
 
-if exist "%APP_EXE%" (
-  pushd "%APP_DIR%"
-  start "" "%APP_EXE%"
-  popd
-  endlocal
-  exit /b 0
+if not exist "%PACK_ROOT%\ocr-runtime\python\python.exe" (
+  echo [ERRO] OCR embutido nao encontrado em:
+  echo        "%PACK_ROOT%"
+  echo [DICA] Este portable deve conter a pasta gig_ocr_pack_app_dev_clean.
+  pause
+  exit /b 1
 )
 
-echo [AVISO] Nao encontrei o executavel empacotado. Iniciando pelo codigo-fonte...
-
-if exist "%VENV_PY%" (
-  pushd "%BASE_DIR%"
-  start "" "%VENV_PY%" main.py
-  popd
-  endlocal
-  exit /b 0
+if not exist "%APP_EXE%" (
+  echo [ERRO] Nao encontrei o executavel do GIG em:
+  echo        "%APP_EXE%"
+  pause
+  exit /b 1
 )
 
-where py >nul 2>nul
-if %ERRORLEVEL% EQU 0 (
-  pushd "%BASE_DIR%"
-  start "" py -3 main.py
-  popd
-  endlocal
-  exit /b 0
-)
+set "GIG_OCR_PACK_ROOT=%PACK_ROOT%"
+set "GIG_OCR_PYTHON=%PACK_ROOT%\ocr-runtime\python\python.exe"
+set "GIG_OCR_TEMP_ROOT=%PACK_ROOT%\tmp"
 
-where python >nul 2>nul
-if %ERRORLEVEL% EQU 0 (
-  pushd "%BASE_DIR%"
-  start "" python main.py
-  popd
-  endlocal
-  exit /b 0
-)
-
-echo [ERRO] Nao foi possivel iniciar o GIG.
-echo [DICA] Gere o pacote com:
-echo        powershell -ExecutionPolicy Bypass -File "%BASE_DIR%scripts\build_portable.ps1"
-echo [DICA] Ou crie/ative um Python em "%BASE_DIR%\.venv".
-pause
+pushd "%APP_DIR%"
+start "" "%APP_EXE%"
+popd
 endlocal
-exit /b 1
+exit /b 0

@@ -7,41 +7,21 @@ param(
 $ErrorActionPreference = "Stop"
 
 $scriptDir = (Resolve-Path (Split-Path -Parent $MyInvocation.MyCommand.Path)).Path
-$baseCandidates = @(
-    $scriptDir,
-    (Resolve-Path (Join-Path $scriptDir "..")).Path
-)
+$hiddenLauncher = Join-Path $scriptDir "scripts\launch_gig_portable_hidden.ps1"
+$runBat = Join-Path $scriptDir "run_gig.bat"
+$exePortable = Join-Path $scriptDir "GIG\GIG.exe"
+$customIcon = Join-Path $scriptDir "assets\gig_icon_modern.ico"
 
-$baseDir = $null
-$targetPath = $null
-$iconPath = $null
-
-foreach ($base in $baseCandidates) {
-    $runBat = Join-Path $base "run_gig.bat"
-    $runTestMode = Join-Path $base "scripts\run_test_mode.cmd"
-    $exePortable = Join-Path $base "GIG\GIG.exe"
-    $exeProject = Join-Path $base "dist\GIG\GIG.exe"
-    $customIconV4 = Join-Path $base "assets\gig_icon_v4.ico"
-    $customIcon = Join-Path $base "assets\gig_icon_modern.ico"
-
-    if (Test-Path $runBat) {
-        $baseDir = $base
-        # Preferencia: abrir a versao atual do codigo-fonte (modo teste), quando disponivel.
-        if (Test-Path $runTestMode) {
-            $targetPath = $runTestMode
-        } else {
-            $targetPath = $runBat
-        }
-        if (Test-Path $customIconV4) { $iconPath = $customIconV4 }
-        elseif (Test-Path $customIcon) { $iconPath = $customIcon }
-        elseif (Test-Path $exePortable) { $iconPath = $exePortable }
-        elseif (Test-Path $exeProject) { $iconPath = $exeProject }
-        break
-    }
+if ((Test-Path $hiddenLauncher) -and (Test-Path $runBat)) {
+    $targetPath = (Join-Path $env:WINDIR "System32\WindowsPowerShell\v1.0\powershell.exe")
+    $arguments = '-NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File "' + $hiddenLauncher + '"'
 }
-
-if (-not $targetPath) {
-    throw "Nao encontrei run_gig.bat (nem no diretorio atual nem no pai)."
+elseif (Test-Path $runBat) {
+    $targetPath = $runBat
+    $arguments = ""
+}
+else {
+    throw "Nao encontrei run_gig.bat."
 }
 
 if (-not (Test-Path $DestinationDir)) {
@@ -55,10 +35,13 @@ if ((Test-Path $shortcutPath) -and (-not $Overwrite)) {
     exit 0
 }
 
+$iconPath = if (Test-Path $customIcon) { $customIcon } elseif (Test-Path $exePortable) { $exePortable } else { $null }
+
 $wsh = New-Object -ComObject WScript.Shell
 $shortcut = $wsh.CreateShortcut($shortcutPath)
 $shortcut.TargetPath = $targetPath
-$shortcut.WorkingDirectory = (Split-Path -Parent $targetPath)
+$shortcut.Arguments = $arguments
+$shortcut.WorkingDirectory = $scriptDir
 if ($iconPath) {
     $shortcut.IconLocation = "$iconPath,0"
 }
@@ -66,3 +49,6 @@ $shortcut.Save()
 
 Write-Host "Atalho criado com sucesso: $shortcutPath" -ForegroundColor Green
 Write-Host "Destino: $targetPath"
+if ($arguments) {
+    Write-Host "Argumentos: $arguments"
+}
