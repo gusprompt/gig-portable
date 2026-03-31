@@ -1,0 +1,68 @@
+<html>
+<head>
+  <title>Abrir GIG</title>
+  <HTA:APPLICATION
+    APPLICATIONNAME="Abrir GIG"
+    BORDER="none"
+    CAPTION="no"
+    ICON="assets\gig_icon_modern.ico"
+    MAXIMIZEBUTTON="no"
+    MINIMIZEBUTTON="no"
+    SCROLL="no"
+    SHOWINTASKBAR="no"
+    SINGLEINSTANCE="yes"
+    SYSMENU="no"
+    WINDOWSTATE="minimize"
+  />
+  <script language="javascript">
+    function normalizeLocalPath(pathname) {
+      var normalized = decodeURIComponent(pathname).replace(/\//g, "\\");
+      if (/^\\[A-Za-z]:/.test(normalized)) {
+        normalized = normalized.substring(1);
+      }
+      return normalized;
+    }
+
+    function buildPath(base, child) {
+      if (base.charAt(base.length - 1) === "\\") {
+        return base + child;
+      }
+      return base + "\\" + child;
+    }
+
+    function launchGig() {
+      try {
+        var shell = new ActiveXObject("WScript.Shell");
+        var fso = new ActiveXObject("Scripting.FileSystemObject");
+        var currentFile = normalizeLocalPath(window.location.pathname);
+        var baseDir = fso.GetParentFolderName(currentFile);
+        var packRoot = buildPath(baseDir, "gig_ocr_pack_app_dev_clean");
+        var ocrPython = buildPath(packRoot, "ocr-runtime\\python\\python.exe");
+        var appExe = buildPath(baseDir, "GIG\\GIG.exe");
+
+        if (!fso.FileExists(ocrPython)) {
+          alert("Nao encontrei o OCR embutido em:\n" + packRoot);
+          window.close();
+          return;
+        }
+
+        if (!fso.FileExists(appExe)) {
+          alert("Nao encontrei o executavel do GIG em:\n" + appExe);
+          window.close();
+          return;
+        }
+
+        shell.Environment("PROCESS")("GIG_OCR_PACK_ROOT") = packRoot;
+        shell.Environment("PROCESS")("GIG_OCR_PYTHON") = ocrPython;
+        shell.Environment("PROCESS")("GIG_OCR_TEMP_ROOT") = buildPath(packRoot, "tmp");
+        shell.Run('"' + appExe + '"', 1, false);
+      } catch (error) {
+        alert("Nao foi possivel iniciar o GIG.\n\n" + error.message);
+      }
+
+      window.close();
+    }
+  </script>
+</head>
+<body onload="launchGig()"></body>
+</html>

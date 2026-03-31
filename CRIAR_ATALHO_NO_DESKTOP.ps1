@@ -7,12 +7,17 @@ param(
 $ErrorActionPreference = "Stop"
 
 $scriptDir = (Resolve-Path (Split-Path -Parent $MyInvocation.MyCommand.Path)).Path
+$htaLauncher = Join-Path $scriptDir "ABRIR_GIG.hta"
 $hiddenLauncher = Join-Path $scriptDir "scripts\launch_gig_portable_hidden.ps1"
 $runBat = Join-Path $scriptDir "run_gig.bat"
 $exePortable = Join-Path $scriptDir "GIG\GIG.exe"
 $customIcon = Join-Path $scriptDir "assets\gig_icon_modern.ico"
 
-if ((Test-Path $hiddenLauncher) -and (Test-Path $runBat)) {
+if (Test-Path $htaLauncher) {
+    $targetPath = $htaLauncher
+    $arguments = ""
+}
+elseif ((Test-Path $hiddenLauncher) -and (Test-Path $runBat)) {
     $targetPath = (Join-Path $env:WINDIR "System32\WindowsPowerShell\v1.0\powershell.exe")
     $arguments = '-NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File "' + $hiddenLauncher + '"'
 }
