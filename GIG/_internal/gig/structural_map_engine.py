@@ -1,8 +1,8 @@
 """
 Motor compartilhado de mapa estrutural.
 
-Este modulo concentra a implementacao neutra usada por Filtro, Dissector e
-Pilar para produzir artefatos estruturais a partir de texto ancorado e
+Este modulo concentra a implementacao neutra usada por Filtro e variantes
+canonicas para produzir artefatos estruturais a partir de texto ancorado e
 sumarios do processo.
 """
 
@@ -133,6 +133,17 @@ def _normalize_label(value: str) -> str:
     normalized = "".join(ch for ch in normalized if not unicodedata.combining(ch))
     normalized = re.sub(r"[^a-z0-9 ]", " ", normalized)
     return re.sub(r"\s+", " ", normalized).strip()
+
+
+def _build_omit_category_lookup(
+    omit_transcription_categories: set[str] | frozenset[str] | None,
+) -> set[str]:
+    normalized: set[str] = set()
+    for category in omit_transcription_categories or set():
+        key = _normalize_label(str(category or ""))
+        if key:
+            normalized.add(key)
+    return normalized
 
 
 def _normalize_line_for_match(line: str) -> str:
@@ -553,6 +564,8 @@ def _build_document_record(
     texto: list[dict[str, Any]],
     has_text: bool,
     requires_view_review: bool,
+    texto_omitido: bool = False,
+    texto_omitido_motivo: str = "",
 ) -> dict[str, Any]:
     return {
         "aip_inicio": aip_inicio,
@@ -563,6 +576,8 @@ def _build_document_record(
         "arquivo_original": arquivo_original,
         "texto": texto,
         "has_text": has_text,
+        "texto_omitido": texto_omitido,
+        "texto_omitido_motivo": texto_omitido_motivo,
         "requires_view_review": requires_view_review,
     }
 
@@ -823,6 +838,7 @@ def build_structural_map(
     manifest_pages: list[dict[str, Any]] | None = None,
     conversion_metadata: dict[str, Any] | None = None,
     ocr_runtime_config: dict[str, Any] | None = None,
+    omit_transcription_categories: set[str] | frozenset[str] | None = None,
 ) -> StructuralMapResult:
     def log(message: str) -> None:
         if logger is not None:
@@ -837,6 +853,7 @@ def build_structural_map(
         sumario=sumario_full,
         selected_summary=selected_summary,
     )
+    omit_categories_lookup = _build_omit_category_lookup(omit_transcription_categories)
     total_paginas_pdf = len(manifest_pages) if isinstance(manifest_pages, list) and manifest_pages else context.total_pages
 
     log(
@@ -846,6 +863,11 @@ def build_structural_map(
         f"{len(context.selected_files)} por arquivo, "
         f"include_all={context.include_all_items}."
     )
+    if omit_categories_lookup:
+        log(
+            f"[{tool_label}] Categorias com transcricao omitida: "
+            + ", ".join(sorted(omit_categories_lookup))
+        )
 
     review_lookup = set(review_pages or set())
     documentos: list[dict[str, Any]] = []
@@ -881,6 +903,9 @@ def build_structural_map(
         if not has_text:
             documentos_sem_texto += 1
 
+        categoria_key = _normalize_label(categoria)
+        texto_omitido = categoria_key in omit_categories_lookup
+        texto_omitido_motivo = "categoria_excluida" if texto_omitido else ""
         classe_documental = _classify_document_class(categoria)
         requires_view_review = _requires_view_review(review_lookup, pag_ini, pag_fim)
         documentos.append(
@@ -891,9 +916,11 @@ def build_structural_map(
                 arquivo_original=piece_ref.arquivo_original,
                 aip_inicio=aip_inicio,
                 aip_fim=aip_fim,
-                texto=texto,
+                texto=[] if texto_omitido else texto,
                 has_text=has_text,
                 requires_view_review=requires_view_review,
+                texto_omitido=texto_omitido,
+                texto_omitido_motivo=texto_omitido_motivo,
             )
         )
         raw_documentos.append(
@@ -904,9 +931,11 @@ def build_structural_map(
                 arquivo_original=piece_ref.arquivo_original,
                 aip_inicio=aip_inicio,
                 aip_fim=aip_fim,
-                texto=raw_texto,
+                texto=[] if texto_omitido else raw_texto,
                 has_text=any(str(page.get("conteudo") or "").strip() for page in raw_texto),
                 requires_view_review=requires_view_review,
+                texto_omitido=texto_omitido,
+                texto_omitido_motivo=texto_omitido_motivo,
             )
         )
 

@@ -1,5 +1,5 @@
 """
-Fachada compartilhada para o motor estrutural usado por Filtro, Dissector e Pilar.
+Fachada compartilhada para o motor estrutural usado por Filtro e variantes canonicas.
 
 Mantem compatibilidade com a implementacao atual em gig.pilar, mas desacopla os
 chamadores do nome conceitual da ferramenta.
